@@ -33,11 +33,23 @@ class DB_Functions {
 	public function query($query){
 	$sql = sprintf(query);
 	$result = mysql_query($sql);
-	$rows = array();
-	while($r = mysql_fetch_assoc($result)) {
-		$rows[] = $r;
+	if($result === TRUE){
+		if(mysql_num_rows($result)>0){
+			$rows = array();
+			while($r = mysql_fetch_assoc($result)) {
+				$rows[] = $r;
+			}
+			print json_encode($rows);
+			return true;
+		}
+		else{
+			$Error = array('error' => 'empty')
+			print json_encode($Error);
+			return true;
+		}
 	}
-	print json_encode($rows);
+	else{
+		return false
 	}
 }
 ?>

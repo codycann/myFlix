@@ -10,10 +10,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 
  
-public class pullDatabase extends AsyncTask<String, Void, Void>
+public class pullDatabase extends AsyncTask<String, Void, Boolean>
 	    {
-			String[] col = new String[]{"filename","title","year","rated","runtime",
-					"awards","plot","imdbRating","Genre","Director","Writer","Actors"};
+			String[] col = new String[]{"filename","Title","Year","Rated","Runtime",
+					"Awards","Plot","imdbRating","Genre","Director","Writer","Actors"};
+			boolean done = false;
 			JSONArray json;
 	        private Context context;
 	        private ProgressDialog pDialog;
@@ -24,6 +25,7 @@ public class pullDatabase extends AsyncTask<String, Void, Void>
 	            siteData = new DatabaseQuery(context);
 	            siteData.deleteAll();
 	        }
+	        @Override
 	        protected void onPreExecute() {
 	            // TODO Auto-generated method stub
 	            pDialog = new ProgressDialog(context);
@@ -32,11 +34,12 @@ public class pullDatabase extends AsyncTask<String, Void, Void>
 	            pDialog.setCancelable(false);
 	            pDialog.show();
 	        }
-
-	        protected Void doInBackground(String... site) {
+	        @Override
+	        protected Boolean doInBackground(String... site) {
 	            // TODO Auto-generated method stub
 	            try {  
 	            	json = siteQuery.newQuery("SELECT * from movies");
+	            	//Log.v("log_tag", "Error parsing data ="+json.toString());
             		JSONObject json_data = null; 
             		for(int i=0;i<json.length();i++){
 	            		json_data = json.getJSONObject(i); 
@@ -48,12 +51,19 @@ public class pullDatabase extends AsyncTask<String, Void, Void>
             		} 
 	            }
             	catch(JSONException e){ 
-            		Log.e("log_tag", "Error parsing data "+e.toString()); 
+            		Log.e("log_tag", "Error parsing data "+e.toString());
+    	        	done = true;
+            		return false;
             	}
-				return null;    
+	            Log.v("mytag","finished pulling data");
+	        	done = true;
+				return true;    
 	        }
-	        protected void onPostExecute(String args) {
+	        @Override
+	        protected void onPostExecute(Boolean result) {
 	            // TODO Auto-generated method stub
+	            Log.v("mytag","post execute");
 	            pDialog.dismiss();
+	            return;
 	        }
 }

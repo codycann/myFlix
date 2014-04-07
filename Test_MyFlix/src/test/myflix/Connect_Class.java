@@ -34,9 +34,9 @@ public JSONArray newQuery(String query) {
 			ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs = new ArrayList<NameValuePair>(1);
 			nameValuePairs.add(new BasicNameValuePair("query",query));
-			//nameValuePairs.add(new BasicNameValuePair("type", type));
 			httpclient = new DefaultHttpClient();
-	        httppost = new HttpPost("http://www.cannonmovies.us/sql_post.php");
+	        //httppost = new HttpPost("http://www.cannonmovies.us/sql_post.php");
+	        httppost = new HttpPost("http://www.cannonmovies.us/queryTest.php");
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	        response = httpclient.execute(httppost);
 	        HttpEntity entity = response.getEntity();

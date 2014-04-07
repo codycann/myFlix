@@ -17,17 +17,17 @@ public class DatabaseQuery {
 		databaseKeys = new ArrayList<String>();
 		databaseKeyOptions = new ArrayList<String>();
 		databaseKeys.add("filename");
-		databaseKeys.add("title");
-		databaseKeys.add("year");
-		databaseKeys.add("rated");
-		databaseKeys.add("runtime");
-		databaseKeys.add("awards");
-		databaseKeys.add("plot");
+		databaseKeys.add("Title");
+		databaseKeys.add("Year");
+		databaseKeys.add("Rated");
+		databaseKeys.add("Runtime");
+		databaseKeys.add("Awards");
+		databaseKeys.add("Plot");
 		databaseKeys.add("imdbRating");
-		databaseKeys.add("genre");
-		databaseKeys.add("director");
-		databaseKeys.add("writer");
-		databaseKeys.add("actors");
+		databaseKeys.add("Genre");
+		databaseKeys.add("Director");
+		databaseKeys.add("Writer");
+		databaseKeys.add("Actors");
 		databaseKeyOptions.add("text not null");
 		
 		database = new DBAdapter(context, "SiteData", databaseKeys, databaseKeyOptions);
@@ -109,5 +109,8 @@ public class DatabaseQuery {
 	
 	public void destroy() throws Throwable{
         database.close();
+	}
+	public void manualClose(){
+		database.close();
 	}
 }

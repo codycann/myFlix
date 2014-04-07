@@ -1,5 +1,7 @@
 package test.myflix;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,35 +10,37 @@ import android.util.Log;
 
 public class ImageStorage {
     private Context context;
+    ImageDownloader pullTask;
+    ArrayList<Bitmap> images;
+    ArrayList<String> pullTitles;
+    
+	String fullPath = Environment.getExternalStorageDirectory().toString();
 	
 	public ImageStorage(Context context){
 		this.context = context;
 	}
-	public Bitmap getThumbnail(String title) {
-
-		String fullPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-		Bitmap thumbnail = null;
-
-		// Look for the file on the external storage
-		try {
-		if (isSdReadable() == true) {
-		thumbnail = BitmapFactory.decodeFile(fullPath + "/" + title+".jpeg");
+	public ArrayList<Bitmap> getThumbnail(ArrayList<String> titles) {
+		//String fullPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+		for(int i = 0; i < titles.size(); i++){
+			// Look for the file on the external storage
+			Bitmap thumbnail = null;
+			try {
+				thumbnail = checkImage(titles.get(i));
+				if(thumbnail == null){
+					pullTitles.add(titles.get(i));
+				}
+			}
+			catch (Exception e) {
+				Log.e("getThumbnail() on external storage", e.getMessage());
+			}
 		}
-		} catch (Exception e) {
-		Log.e("getThumbnail() on external storage", e.getMessage());
+		if(pullTitles.size() > 0){
+			download();
 		}
-
-		// If no file on external storage, pull from web
-		if (thumbnail == null) {
-		try {
-			new ImageDownloader(context).execute(title);
-			thumbnail = BitmapFactory.decodeFile(fullPath + "/" + title+".jpeg");
-		} catch (Exception ex) {
-		Log.e("getThumbnail() pulled from web", ex.getMessage());
-		}
-		}
-		return thumbnail;
-		}
+		for(int i = 0; i < titles.size(); i++)
+			images.add(checkImage(titles.get(i)));
+		return images;
+	}
 	public boolean isSdReadable() {
 		boolean mExternalStorageAvailable = false;
 		String state = Environment.getExternalStorageState();
@@ -52,5 +56,30 @@ public class ImageStorage {
 			mExternalStorageAvailable = false;
 		}
 		return mExternalStorageAvailable;
+	}
+	@SuppressWarnings("unchecked")
+	public void download(){
+		try{
+			pullTask = new ImageDownloader(context);
+			pullTask.execute(pullTitles);
+			while(pullTask.done == false){
+		    	try { Thread.sleep(100); 
+		    		Log.v("mytag","still looping!");
+		    	}
+		    	catch (InterruptedException e) { e.printStackTrace(); }
+			}
+		} 
+		catch (Exception ex) {
+		Log.e("getThumbnail() pulled from web", ex.getMessage());
+		}
+	}
+	public Bitmap checkImage(String title){
+		Bitmap thumbnail = null;
+		if (isSdReadable() == true) {
+			thumbnail = BitmapFactory.decodeFile(fullPath + "/" + title + ".jpeg");
+			Log.v("mytag", title);
+			images.add(thumbnail);
+		}
+		return thumbnail;
 	}
 }

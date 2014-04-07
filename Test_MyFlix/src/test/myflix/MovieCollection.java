@@ -7,16 +7,27 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 public class MovieCollection extends FragmentActivity {
 
 	  PageviewApapter pageAdapter;
+	  boolean dataPulled = false;
+	  pullDatabase dataTask; 
 	  @Override
 
 	  public void onCreate(Bundle savedInstanceState) {
 
 	    super.onCreate(savedInstanceState);
-	    new pullDatabase(this).execute("");
+	    dataTask = new pullDatabase(this);
+	    dataTask.execute("");
+	    while (dataTask.done == false) { //Loops at .1 sec intervals until AsyncTask has finished  
+	    	try { Thread.sleep(100); 
+		    	Log.v("mytag","still looping!");
+	        }
+	        catch (InterruptedException e) { e.printStackTrace(); }
+	    }
+	    Log.v("mytag","made it out of the loop!");
 	    setContentView(R.layout.moviecollection);
 	    List<Fragment> fragments = getFragments();
 	    pageAdapter = new PageviewApapter(getSupportFragmentManager(), fragments);

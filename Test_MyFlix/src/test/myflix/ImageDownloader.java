@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,13 +19,15 @@ import android.os.Environment;
 import android.util.Log;
 
  
-public class ImageDownloader extends AsyncTask<String, Void, Void>
+public class ImageDownloader extends AsyncTask<ArrayList<String>, Void, ArrayList<Bitmap>>
 	    {
 	        private Context context;
 	        private ProgressDialog pDialog;
 	        String image_url;
 	        URL myFileUrl = null;
 	        Bitmap bmImg = null;
+	        boolean done = false;
+	        ArrayList<Bitmap> images;
 	        public ImageDownloader(Context context) {
 	            this.context = context;
 	        }
@@ -38,44 +41,50 @@ public class ImageDownloader extends AsyncTask<String, Void, Void>
 
 	        }
 
-	        protected Void doInBackground(String... args) {
+	        protected ArrayList<Bitmap> doInBackground(ArrayList<String>... args) {
 	            // TODO Auto-generated method stub
-
-	            try {  
-	                myFileUrl = new URL("http://cannonmovies.us/posters/"+args[0]+".jpeg");
-	                HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();   
-	                conn.setDoInput(true);   
-	                conn.connect();     
-	                InputStream is = conn.getInputStream();
-	                bmImg = BitmapFactory.decodeStream(is); 
-	            }
-	            catch (IOException e)
-	            {   
-	                e.printStackTrace();  
-	            }     
-	            //store image
-				if(isSdReadable()){
-					String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-					OutputStream outStream = null;
-					File file = new File(extStorageDirectory, "er.jpeg");
-					try {
-				    outStream = new FileOutputStream(file);
-				    bmImg.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
-				    outStream.flush();
-				    outStream.close();          		   
-					} catch (FileNotFoundException e) {
-				    // TODO Auto-generated catch block
-				    e.printStackTrace();
-					} catch (IOException e) {
-				    // TODO Auto-generated catch block
-				    e.printStackTrace();
+	        	for(int i = 0; i < args[0].size(); i++){
+		            try {
+		            	String url = "http://cannonmovies.us/posters/"+args[0].get(i)+".jpeg";
+		            	url = url.replace(" ", "%20");
+		                myFileUrl = new URL(url);
+		                Log.v("url", url);
+		                HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();   
+		                conn.setDoInput(true);   
+		                conn.connect();     
+		                InputStream is = conn.getInputStream();
+		                bmImg = BitmapFactory.decodeStream(is); 
+		            }
+		            catch (IOException e)
+		            {   
+		                e.printStackTrace();  
+		            }     
+		            //store image
+					if(isSdReadable()){
+						String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+						OutputStream outStream = null;
+						File file = new File(extStorageDirectory,""+args[0].get(i)+".jpeg");
+						try {
+					    outStream = new FileOutputStream(file);
+					    bmImg.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+					    outStream.flush();
+					    outStream.close();          		   
+						} catch (FileNotFoundException e) {
+					    // TODO Auto-generated catch block
+					    e.printStackTrace();
+						} catch (IOException e) {
+					    // TODO Auto-generated catch block
+					    e.printStackTrace();
+						}
 					}
-				}
-	            return null;
+	        	}
+	        	done = true;
+	            return images;
 	        }
-	        protected void onPostExecute(String args) {
+	        @Override
+	        protected void onPostExecute(ArrayList<Bitmap> args) {
 	            // TODO Auto-generated method stub
-
+	        	
 	            pDialog.dismiss();
 
 	        }

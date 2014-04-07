@@ -1,9 +1,13 @@
 <?php
-    require_once 'include/DB_Functions.php';
+    require_once 'myflix/db_functions.php';
     $db = new DB_Functions();
-	$query = $_POST['query'];
+	$query = 'SELECT * FROM movies';
+	if(isset($_POST['query'])){
+		$query = $_POST['query'];
+	}
 	if(!db.query($query)){
-		print "{ "error":"failed"}";
+		$Error = array('error' => 'failed');
+		print json_encode($Error);
 	}
 	mysql_close();
 ?>

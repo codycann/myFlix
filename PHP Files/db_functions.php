@@ -4,10 +4,20 @@ class DB_Functions {
  
     private $db;
 
+	
+	function DB_Functions(){
+	    //require_once 'myflix/DB_Connect.php';
+
+        //$this->db = new DB_Connect();
+        //$this->db->connect();
+	}
+
     function __construct() {
-        require_once 'DB_Connect.php';
+        require_once 'myflix/DB_Connect.php';
         $this->db = new DB_Connect();
         $this->db->connect();
+		$conn = mysql_connect('localhost', "root", "moviepass");
+		mysql_select_db("myflix", $conn);
     }
  
     function __destruct() {
@@ -31,25 +41,28 @@ class DB_Functions {
     }
 	}
 	public function query($query){
-	$sql = sprintf(query);
+	$sql = sprintf($query);
 	$result = mysql_query($sql);
 	if($result === TRUE){
-		if(mysql_num_rows($result)>0){
+		if(mysql_num_rows($result) > 0){
 			$rows = array();
 			while($r = mysql_fetch_assoc($result)) {
 				$rows[] = $r;
 			}
-			print json_encode($rows);
-			return true;
+			$output = json_encode($rows);
+			print $output;
+			//return true;
+		
 		}
-		else{
-			$Error = array('error' => 'empty')
-			print json_encode($Error);
-			return true;
-		}
+		//else{
+			//$Error = array('error' => 'empty')
+			//print json_encode($Error);
+			//return true;
+		//}
+	//}
+	//else{
+	//	return false
 	}
-	else{
-		return false
-	}
+}	
 }
 ?>

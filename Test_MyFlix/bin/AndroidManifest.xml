@@ -30,6 +30,9 @@
         <activity android:name="test.myflix.GridFragment"> </activity>
         <activity android:name="test.myflix.GridAdapter"> </activity>
         <activity android:name="test.myflix.PageviewAdapter"> </activity>
-     
+        <activity android:name="test.myflix.VideoViewActivity"
+          android:screenOrientation="landscape" 
+          android:configChanges="orientation|keyboardHidden"
+          android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"/>
     </application>
 </manifest>

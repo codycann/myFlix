@@ -21,10 +21,12 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int background=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f080006;
+        public static final int VideoView=0x7f080006;
+        public static final int action_settings=0x7f080007;
         public static final int gridview1=0x7f080000;
         public static final int gridview_genre=0x7f080002;
         public static final int movie_poster=0x7f080003;
@@ -37,6 +39,7 @@ public final class R {
         public static final int fragment_grid=0x7f030001;
         public static final int movie_view=0x7f030002;
         public static final int moviecollection=0x7f030003;
+        public static final int videoview_main=0x7f030004;
     }
     public static final class menu {
         public static final int connect=0x7f070000;

@@ -10,16 +10,16 @@
 	    android:layout_height="wrap_content"
 	    android:layout_alignParentTop="true"
 	    android:background="#FF0000"
-	    android:contentDescription="@string/poster_desc" >
+	    android:contentDescription="@string/movie_poster" >
 	</ImageView>
 
   	<TextView
   	    android:id="@+id/movie_title"
   	    android:layout_width="fill_parent"
   	    android:layout_height="wrap_content"
-  	    android:textAppearance="?android:attr/textAppearanceLarge"
   	    android:textStyle="bold"
-	    android:layout_below ="@+id/movie_poster"
+  	    android:gravity
+	    android:layout_below ="@+id/poster_desc"
 	   ></TextView>
 
 </RelativeLayout>

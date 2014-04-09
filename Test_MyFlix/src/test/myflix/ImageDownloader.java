@@ -25,6 +25,7 @@ public class ImageDownloader extends AsyncTask<ArrayList<String>, Void, ArrayLis
 	        private ProgressDialog pDialog;
 	        String image_url;
 	        URL myFileUrl = null;
+	        String file_title;
 	        Bitmap bmImg = null;
 	        boolean done = false;
 	        ArrayList<Bitmap> images;
@@ -42,10 +43,10 @@ public class ImageDownloader extends AsyncTask<ArrayList<String>, Void, ArrayLis
 	        }
 
 	        protected ArrayList<Bitmap> doInBackground(ArrayList<String>... args) {
-	            // TODO Auto-generated method stub
 	        	for(int i = 0; i < args[0].size(); i++){
 		            try {
-		            	String url = "http://cannonmovies.us/posters/"+args[0].get(i)+".jpeg";
+		    			file_title = args[0].get(i).replace(":", "()");
+		            	String url = "http://cannonmovies.us/posters/"+file_title+".jpeg";
 		            	url = url.replace(" ", "%20");
 		                myFileUrl = new URL(url);
 		                Log.v("url", url);
@@ -63,10 +64,11 @@ public class ImageDownloader extends AsyncTask<ArrayList<String>, Void, ArrayLis
 					if(isSdReadable()){
 						String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
 						OutputStream outStream = null;
-						File file = new File(extStorageDirectory,""+args[0].get(i)+".jpeg");
+						File file = new File(extStorageDirectory,""+file_title+".jpeg");
+						Log.v("file_title", file_title);
 						try {
 					    outStream = new FileOutputStream(file);
-					    bmImg.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+					    bmImg.compress(Bitmap.CompressFormat.JPEG, 50, outStream);
 					    outStream.flush();
 					    outStream.close();          		   
 						} catch (FileNotFoundException e) {
@@ -78,6 +80,7 @@ public class ImageDownloader extends AsyncTask<ArrayList<String>, Void, ArrayLis
 						}
 					}
 	        	}
+	        	
 	        	done = true;
 	            return images;
 	        }

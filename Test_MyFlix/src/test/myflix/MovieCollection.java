@@ -38,9 +38,9 @@ public class MovieCollection extends FragmentActivity {
 private List<Fragment> getFragments(){
 
 	  List<Fragment> fList = new ArrayList<Fragment>();
-	  fList.add(GridFragment.newInstance("Action"));
-	  fList.add(GridFragment.newInstance("Crime")); 
-	  fList.add(GridFragment.newInstance("Thriller"));
+	  fList.add(GridFragment.newInstance("Comedy"));
+	  fList.add(GridFragment.newInstance("Drama")); 
+	  fList.add(GridFragment.newInstance("Romance"));
 	  
 	  //add to list for every genre page
 

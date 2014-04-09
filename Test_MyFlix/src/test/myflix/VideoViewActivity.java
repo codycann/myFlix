@@ -49,14 +49,17 @@ public class VideoViewActivity extends Activity {
         	Bundle extras = this.getIntent().getExtras();
             try
             {
-            	VideoURL = extras.getString("URL");
-            	MovieName = extras.getString("MovieName");
+            	String title = extras.getString("title");
+            	VideoURL = "http://cannonmovies.us/myflix/"+ title + ".mp4";
+            	//VideoURL = "http://cannonmovies.us/myflix/Fight Club.mp4";
+            	VideoURL = VideoURL.replace(" ","%20");
+            	MovieName = title;
             }
             catch(Exception e)
             {
             	Log.e("Bundle Retrieval Exception", e.toString());
-            	VideoURL = "http://cannonmovies.us/movies/directory/Myflix%20Hot%20Directory/Transfered/X-Men%20First%20Class%20.mp4";
-            	MovieName = "X-Men First Class";
+            	VideoURL = "http://cannonmovies.us/myflix/5%20Days%20of%20War.mp4";
+            	MovieName = "Default Movie";
             }
             
             try

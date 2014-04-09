@@ -17,6 +17,8 @@ public class GridAdapter extends BaseAdapter {
 	ImageStorage imageContainer;
 	DatabaseQuery siteData;
 	String newGenre;
+	ImageView poster;
+	TextView description;
 	
 	public GridAdapter(Context context, String genre) {
 		super();
@@ -34,45 +36,40 @@ public class GridAdapter extends BaseAdapter {
 
 	@Override
 	public Object getItem(int position) {
-		return null;
+		return imageList.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return 0;
+		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-           View gridView;
-
-          if (convertView == null) {
-
-	     gridView = new View(context);
-
-	gridView = inflater.inflate(R.layout.movie_view, null);
-
-	TextView textView = (TextView) gridView.findViewById(R.id.movie_title);
-	textView.setText(titles.get(position));
-	
-	//ImageView imageView = (ImageView) gridView.findViewById(R.id.movie_poster);
-	//imageView.setImageBitmap(imageList.get(position));
-
-} else {
-	gridView = (View) convertView;
-}
-
-return gridView;
-
+		View gridView;
+		gridView = new View(context);
+		if (convertView == null) {
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		    gridView = inflater.inflate(R.layout.movie_view, parent, false);
+		}
+		else {
+			gridView = (View) convertView;
+		}
+		poster = (ImageView) gridView.findViewById(R.id.movie_poster);
+	    description = (TextView) gridView.findViewById(R.id.movie_title);
+		description.setText(titles.get(position));
+		poster.setOnClickListener(new movieListener(titles.get(position)));  
+	    if(imageList != null){
+	    	poster.setImageBitmap(imageList.get(position));
+	    }
+        return gridView;
 	}
-
 
 	public void populate(){
 		titles = siteData.getCol("title", "genre like ?",new String[]{"%"+newGenre+"%"}, null, null, null, "");
-		imageList = imageContainer.getThumbnail(titles);
 		siteData.manualClose();
+		imageList = imageContainer.getThumbnail(titles);
+
 		return;
 	}
 }

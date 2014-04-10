@@ -14,11 +14,13 @@ public class GridAdapter extends BaseAdapter {
 	private Context context;
 	ArrayList<Bitmap> imageList;
 	ArrayList<String> titles;
+	ArrayList<String> rating;
 	ImageStorage imageContainer;
 	DatabaseQuery siteData;
 	String newGenre;
 	ImageView poster;
 	TextView description;
+	TextView imdb;
 	
 	public GridAdapter(Context context, String genre) {
 		super();
@@ -55,10 +57,15 @@ public class GridAdapter extends BaseAdapter {
 		else {
 			gridView = (View) convertView;
 		}
-		poster = (ImageView) gridView.findViewById(R.id.movie_poster);
+
 	    description = (TextView) gridView.findViewById(R.id.movie_title);
 		description.setText(titles.get(position));
-		poster.setOnClickListener(new movieListener(titles.get(position)));  
+		
+		imdb = (TextView) gridView.findViewById(R.id.movie_rating);
+		imdb.setText(rating.get(position));
+		
+		poster = (ImageView) gridView.findViewById(R.id.movie_poster);
+		poster.setOnClickListener(new movieListener(titles.get(position)));
 	    if(imageList != null){
 	    	poster.setImageBitmap(imageList.get(position));
 	    }
@@ -67,6 +74,7 @@ public class GridAdapter extends BaseAdapter {
 
 	public void populate(){
 		titles = siteData.getCol("title", "genre like ?",new String[]{"%"+newGenre+"%"}, null, null, null, "");
+		rating = siteData.getCol("imdbRating", "genre like ?",new String[]{"%"+newGenre+"%"}, null, null, null, "");
 		siteData.manualClose();
 		imageList = imageContainer.getThumbnail(titles);
 

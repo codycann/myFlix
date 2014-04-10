@@ -7,13 +7,17 @@
  <TextView
         android:id="@+id/textview_genre"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="50dp"
+		android:textStyle="bold"
+		android:gravity="center"
+		android:textSize="40sp"
+		android:background="@+drawable/background"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <GridView
         android:id="@+id/gridview_genre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#000000"
         android:numColumns="auto_fit" >
     </GridView>
 

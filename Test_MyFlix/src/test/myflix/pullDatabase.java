@@ -28,7 +28,8 @@ public class pullDatabase extends AsyncTask<String, Void, Boolean>
 	        @Override
 	        protected void onPreExecute() {
 	            // TODO Auto-generated method stub
-	            pDialog = new ProgressDialog(context);
+	            pDialog = new ProgressDialog(this.context);
+	            pDialog.setTitle("New Content");
 	            pDialog.setMessage("Updating ...");
 	            pDialog.setIndeterminate(false);
 	            pDialog.setCancelable(false);

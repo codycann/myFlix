@@ -3,9 +3,12 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,14 +22,23 @@ public class GridAdapter extends BaseAdapter {
 	DatabaseQuery siteData;
 	String newGenre;
 	ImageView poster;
-	TextView description;
+	ScaleableTextView description;
 	TextView imdb;
+	double width;
+	double height;
+
 	
 	public GridAdapter(Context context, String genre) {
 		super();
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();		
+		Point size = new Point();
+		display.getSize(size);
+		width = size.x;
+		height = size.y;
 		newGenre = genre;
 		this.context = context;
-		imageContainer = new ImageStorage(context);
+		imageContainer = new ImageStorage(this.context);
 		siteData = new DatabaseQuery(context);
 		populate();
 	}
@@ -58,13 +70,16 @@ public class GridAdapter extends BaseAdapter {
 			gridView = (View) convertView;
 		}
 
-	    description = (TextView) gridView.findViewById(R.id.movie_title);
+	    description = (ScaleableTextView) gridView.findViewById(R.id.movie_title);
 		description.setText(titles.get(position));
 		
 		imdb = (TextView) gridView.findViewById(R.id.movie_rating);
 		imdb.setText(rating.get(position));
 		
+
 		poster = (ImageView) gridView.findViewById(R.id.movie_poster);
+		poster.getLayoutParams().height = (int) (height/(2.2));
+		poster.getLayoutParams().width = (int) (width/(2.2));
 		poster.setOnClickListener(new movieListener(titles.get(position)));
 	    if(imageList != null){
 	    	poster.setImageBitmap(imageList.get(position));

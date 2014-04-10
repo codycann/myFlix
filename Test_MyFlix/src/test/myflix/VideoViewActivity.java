@@ -12,9 +12,8 @@ import android.widget.VideoView;
 
 /* This activity implements the video player. 
  * Requires that intent has putExtra with 
- * type: String  key: "URL" 
- * type: String  key: "MovieName"
- * type: Integer key: "Position" (Position of movie playback) */
+ * type: String  key: "title" 
+ * type: Integer key: "Position" (Position of movie playback) optional, starts at 0 otherwise */
 
 public class VideoViewActivity extends Activity {
  
@@ -51,7 +50,7 @@ public class VideoViewActivity extends Activity {
             {
             	String title = extras.getString("title");
             	VideoURL = "http://cannonmovies.us/myflix/"+ title + ".mp4";
-            	//VideoURL = "http://cannonmovies.us/myflix/Fight Club.mp4";
+            	VideoURL = "http://cannonmovies.us/myflix/2012.mp4";
             	VideoURL = VideoURL.replace(" ","%20");
             	MovieName = title;
             }

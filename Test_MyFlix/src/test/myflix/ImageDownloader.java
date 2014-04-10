@@ -34,8 +34,9 @@ public class ImageDownloader extends AsyncTask<ArrayList<String>, Void, ArrayLis
 	        }
 	        protected void onPreExecute() {
 	            // TODO Auto-generated method stub
-	            pDialog = new ProgressDialog(context);
-	            pDialog.setMessage("Downloading Image ...");
+	            pDialog = new ProgressDialog(context.getApplicationContext());
+	            pDialog.setTitle("Movies");
+	            pDialog.setMessage("Updating List...");
 	            pDialog.setIndeterminate(false);
 	            pDialog.setCancelable(false);
 	            pDialog.show();

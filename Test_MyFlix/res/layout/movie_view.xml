@@ -15,6 +15,7 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="450dp"
 		    android:layout_alignParentTop="true"
+		    android:layout_centerInParent="true"
 		    android:background="@+drawable/background"
 		    android:scaleType="centerCrop"
 		    android:contentDescription="@string/poster_desc" >

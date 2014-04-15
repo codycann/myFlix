@@ -4,14 +4,14 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
- <test.myflix.ScaleableTextView
+<!-- <test.myflix.ScaleableTextView
         android:id="@+id/textview_genre"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
 		android:textStyle="bold"
 		android:gravity="center"
 		android:background="@+drawable/background">
- </test.myflix.ScaleableTextView>
+ </test.myflix.ScaleableTextView> -->
     <GridView
         android:id="@+id/gridview_genre"
         android:layout_width="match_parent"

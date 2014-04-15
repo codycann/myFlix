@@ -2,6 +2,7 @@ package test.myflix;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.view.Display;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 public class GridAdapter extends BaseAdapter {
@@ -20,27 +22,33 @@ public class GridAdapter extends BaseAdapter {
 	ArrayList<String> rating;
 	ImageStorage imageContainer;
 	DatabaseQuery siteData;
-	String newGenre;
+	String [] genreArray;
 	ImageView poster;
 	ScaleableTextView description;
 	TextView imdb;
 	double width;
 	double height;
+	View gridView;
+	GridFragment grid;
 
 	
-	public GridAdapter(Context context, String genre) {
+	public GridAdapter(GridFragment parent, Context context, String [] genres) {
 		super();
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();		
 		Point size = new Point();
 		display.getSize(size);
+		genreArray = genres;
 		width = size.x;
 		height = size.y;
-		newGenre = genre;
 		this.context = context;
+		this.grid = parent;
 		imageContainer = new ImageStorage(this.context);
 		siteData = new DatabaseQuery(context);
 		populate();
+	}
+	public void onConfigurationChanged(Configuration newConfig) {
+		setOrientation();
 	}
 
 	@Override
@@ -60,7 +68,6 @@ public class GridAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View gridView;
 		gridView = new View(context);
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -78,22 +85,40 @@ public class GridAdapter extends BaseAdapter {
 		
 
 		poster = (ImageView) gridView.findViewById(R.id.movie_poster);
-		poster.getLayoutParams().height = (int) (height/(2.2));
-		poster.getLayoutParams().width = (int) (width/(2.2));
+		setOrientation();
 		poster.setOnClickListener(new movieListener(titles.get(position)));
 	    if(imageList != null){
+	    	poster.setScaleType(ScaleType.FIT_XY);
 	    	poster.setImageBitmap(imageList.get(position));
 	    }
         return gridView;
 	}
 
 	public void populate(){
-		titles = siteData.getCol("title", "genre like ?",new String[]{"%"+newGenre+"%"}, null, null, null, "");
-		rating = siteData.getCol("imdbRating", "genre like ?",new String[]{"%"+newGenre+"%"}, null, null, null, "");
+		String condition = "genre like ?";
+		for(int i = 1; i < genreArray.length; i++){
+			condition = condition + " AND genre like ?";
+		}
+		
+		titles = siteData.getCol("title", condition, genreArray, null, null, null, "");
+		rating = siteData.getCol("imdbRating", condition, genreArray, null, null, null, "");
 		siteData.manualClose();
 		imageList = imageContainer.getThumbnail(titles);
 
 		return;
+	}
+	public void setOrientation(){
+		int orientation = context.getResources().getConfiguration().orientation;
+		if(orientation == 1){
+			grid.refreshGrid(2);
+			poster.getLayoutParams().height = (int) (height/(2.2));
+			poster.getLayoutParams().width = (int) (width/(2.2));
+		}
+		else{
+			grid.refreshGrid(3);
+			poster.getLayoutParams().width = (int) (width/3.5);
+			poster.getLayoutParams().height = (int) (height/1.5);
+		}
 	}
 }
 

@@ -36,20 +36,22 @@ public class pullDatabase extends AsyncTask<String, Void, Boolean>
 	            pDialog.show();
 	        }
 	        @Override
-	        protected Boolean doInBackground(String... site) {
+	        protected Boolean doInBackground(String... date) {
 	            // TODO Auto-generated method stub
-	            try {  
+	            try {
+	            	//json = siteQuery.newQuery("SELECT * from movies WHERE date_added > "+ date[0]);
 	            	json = siteQuery.newQuery("SELECT * from movies");
-	            	//Log.v("log_tag", "Error parsing data ="+json.toString());
-            		JSONObject json_data = null; 
-            		for(int i=0;i<json.length();i++){
-	            		json_data = json.getJSONObject(i); 
-	            		for(int j = 0; j < col.length; j++){
-		            		String value=json_data.getString(col[j]).toString();
-		            		siteData.appendData(col[j],value);
+            		JSONObject json_data = null;
+            		if(json != null){
+	            		for(int i=0;i<json.length();i++){
+		            		json_data = json.getJSONObject(i); 
+		            		for(int j = 0; j < col.length; j++){
+			            		String value=json_data.getString(col[j]).toString();
+			            		siteData.appendData(col[j],value);
+		            		}
+			            	siteData.addRow(); 
 	            		}
-		            	siteData.addRow(); 
-            		} 
+            		}
 	            }
             	catch(JSONException e){ 
             		Log.e("log_tag", "Error parsing data "+e.toString());

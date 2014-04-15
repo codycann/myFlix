@@ -131,6 +131,7 @@ public class VideoViewActivity extends Activity {
         
     }
     
+    
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the user's current spot

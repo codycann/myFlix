@@ -34,12 +34,12 @@ public class ImageDownloader extends AsyncTask<ArrayList<String>, Void, ArrayLis
 	        }
 	        protected void onPreExecute() {
 	            // TODO Auto-generated method stub
-	            pDialog = new ProgressDialog(context.getApplicationContext());
-	            pDialog.setTitle("Movies");
-	            pDialog.setMessage("Updating List...");
-	            pDialog.setIndeterminate(false);
-	            pDialog.setCancelable(false);
-	            pDialog.show();
+	            //pDialog = new ProgressDialog(context.getApplicationContext());
+	            //pDialog.setTitle("Movies");
+	            //pDialog.setMessage("Updating List...");
+	            //pDialog.setIndeterminate(false);
+	            //pDialog.setCancelable(false);
+	           // pDialog.show();
 
 	        }
 
@@ -64,12 +64,24 @@ public class ImageDownloader extends AsyncTask<ArrayList<String>, Void, ArrayLis
 		            //store image
 					if(isSdReadable()){
 						String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+						File mediaStorageDir = new File(extStorageDirectory + "/myflix");    
+					    if (!mediaStorageDir.exists()){
+					        if (!mediaStorageDir.mkdirs()){
+					            Log.v("mytag", "failed to create directory");
+					        }
+					    }
 						OutputStream outStream = null;
-						File file = new File(extStorageDirectory,""+file_title+".jpeg");
+						File file = new File(mediaStorageDir,""+file_title+".jpeg");
+						try {
+							file.createNewFile();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} 
 						Log.v("file_title", file_title);
 						try {
 					    outStream = new FileOutputStream(file);
-					    bmImg.compress(Bitmap.CompressFormat.JPEG, 50, outStream);
+					    bmImg.compress(Bitmap.CompressFormat.JPEG, 20, outStream);
 					    outStream.flush();
 					    outStream.close();          		   
 						} catch (FileNotFoundException e) {
@@ -89,7 +101,7 @@ public class ImageDownloader extends AsyncTask<ArrayList<String>, Void, ArrayLis
 	        protected void onPostExecute(ArrayList<Bitmap> args) {
 	            // TODO Auto-generated method stub
 	        	
-	            pDialog.dismiss();
+	            //pDialog.dismiss();
 
 	        }
 
@@ -101,7 +113,7 @@ public boolean isSdReadable() {
 		Log.i("isSdReadable", "External storage card is readable.");
 	} 
 	else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-		Log.i("isSdReadable", "External storage card is readable.");
+		Log.i("isSdReadable", "External storage card is only readable.");
 		mExternalStorageAvailable = true;
 	} 
 	else {

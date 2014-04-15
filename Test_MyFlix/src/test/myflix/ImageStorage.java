@@ -1,5 +1,6 @@
 package test.myflix;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -63,11 +64,12 @@ public class ImageStorage {
 			Log.i("isSdReadable", "External storage card is readable.");
 		} 
 		else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-			Log.i("isSdReadable", "External storage card is readable.");
+			Log.i("isSdReadable", "External storage card is only readable.");
 			mExternalStorageAvailable = true;
 		} 
 		else {
 			mExternalStorageAvailable = false;
+			Log.i("isSdReadable", "External storage card is not readable.");
 		}
 		return mExternalStorageAvailable;
 	}
@@ -91,7 +93,7 @@ public class ImageStorage {
 		Bitmap thumbnail = null;
 		if (isSdReadable() == true) {
 			file_title = title.replace(":", "()");
-			thumbnail = BitmapFactory.decodeFile(fullPath + "/" + title + ".jpeg");
+			thumbnail = BitmapFactory.decodeFile(fullPath + "/myflix/" + title + ".jpeg");
 			Log.v("checkimage", file_title);
 		}
 		if(thumbnail == null){

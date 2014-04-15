@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="title_radio">Title</string>
+    <string name="rating_radio">Rating</string>
+    <string name="title_hint">Movie Title</string>
+    <string name="actor_hint">Actor or Actress</string>
+    
+    <string name="genre_prompt">Choose a Genre</string>
+    <string name="rating_prompt">Rating of at Least</string>
+    <string name="runtime_prompt">Choose Runtime</string>
+    
+    <string name="search">Search</string>
+    <string name="sort">Sort Results By</string>
+    
+    <string-array name="genres_array">
+        <item>Action</item>
+        <item>Comedy</item>
+        <item>Drama</item>
+        <item>Horror</item>
+        <item>Thriller</item>
+    </string-array>
+    
+    <string-array name="ratings_array">
+        <item>4.0</item>
+        <item>3.0</item>
+        <item>2.0</item>
+        <item>1.0</item>
+    </string-array>
+    
+    <string-array name="runtime_array">
+        <item>60-90 mins</item>
+        <item>91-110 mins</item>
+        <item>111-130 mins</item>
+        <item>131+ mins</item>
+    </string-array>
+    
+</resources>

@@ -13,7 +13,7 @@ import android.widget.TextView;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginActivity extends Activity {
+public class RegisterActivity extends Activity {
 
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
@@ -30,48 +30,33 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_register);
 		query = new PostQuery(this);
-		
+
 		// Set up the login form.
-		mEmailView = (EditText) findViewById(R.id.email);
+		mEmailView = (EditText) findViewById(R.id.reg_email);
 		mEmailView.setText(mEmail);
 
-		mPasswordView = (EditText) findViewById(R.id.password);
+		mPasswordView = (EditText) findViewById(R.id.reg_password);
 
-		findViewById(R.id.sign_in_button).setOnClickListener(
+
+		findViewById(R.id.register_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						if(attemptLogin()){
-							Intent mIntent = new Intent(getApplicationContext(), MovieCollection.class);
-							startActivity(mIntent); 
-						}
-					}
-				});
-		
-	/*	findViewById(R.id.register_button).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						Intent mIntent = new Intent(getApplicationContext(), MovieCollection.class);
+						Intent mIntent = new Intent(getApplicationContext(), LoginActivity.class);
 						startActivity(mIntent); 
 					}
-				});  */
+				});
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.login, menu);
+		getMenuInflater().inflate(R.menu.register, menu);
 		return true;
 	}
 
-	/**
-	 * Attempts to sign in or register the account specified by the login form.
-	 * If there are form errors (invalid email, missing fields, etc.), the
-	 * errors are presented and no actual login attempt is made.
-	 */
 	public boolean attemptLogin() {
 
 		// Reset errors.
@@ -115,13 +100,12 @@ public class LoginActivity extends Activity {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-			if (query.execute("SELECT * FROM login WHERE email = "+mEmail+" AND password = "+mPassword+"")!=null) 
+			if (query.execute("SELECT * FROM login WHERE email = "+mEmail+"")!=null) 
 			{
+				query.execute("INSERT * FROM login WHERE email = "+mEmail+" AND password = "+mPassword+"");
 				return true;
 			}
 		}
 		return false;
 	}
 }
-
-	

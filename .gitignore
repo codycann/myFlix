@@ -2,4 +2,7 @@
 *.class
 
 Test_MyFlix/gen/test/myflix/R.java
+<<<<<<< HEAD
 Test_MyFlix/bin
+=======
+>>>>>>> FETCH_HEAD

@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -44,6 +46,7 @@ public class RegisterActivity extends Activity {
 					@Override
 					public void onClick(View view) {
 						if(attemptRegister()){
+							Toast.makeText(getApplicationContext(), "Registration", 1000).show();
 							Intent mIntent = new Intent(getApplicationContext(), LoginActivity.class);
 							startActivity(mIntent); 
 						}
@@ -93,8 +96,8 @@ public class RegisterActivity extends Activity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-			if (query.execute("SELECT * FROM login WHERE email = "+mEmail+"")==null){ 
+			if (query.execute("SELECT * FROM login WHERE email = "+mEmail+"")==null){
+				Log.v("mytag","email not present");
 				query.execute("INSERT INTO login (email, password) VALUES ('"+mEmail+"','"+mPassword+"')");
 				return true;
 			}

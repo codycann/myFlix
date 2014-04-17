@@ -9,7 +9,7 @@ import android.os.AsyncTask;
  
 public class PostQuery extends AsyncTask<String, Void, JSONArray>
 	    {
-			JSONArray json;
+			JSONArray json = null;
 	        private Context context;
 	        private ProgressDialog pDialog;
 	        Connect_Class siteQuery = new Connect_Class();
@@ -32,7 +32,7 @@ public class PostQuery extends AsyncTask<String, Void, JSONArray>
 	            }
 	            catch (Exception e)
 	            {   
-	                e.printStackTrace();  
+	                e.printStackTrace();
 	            }     
 	            return json;
 	        }

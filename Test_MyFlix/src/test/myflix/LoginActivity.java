@@ -62,14 +62,14 @@ public class LoginActivity extends Activity {
 					}
 				});
 		
-	/*	findViewById(R.id.register_button).setOnClickListener(
+		findViewById(R.id.register_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
 						Intent mIntent = new Intent(getApplicationContext(), RegisterActivity.class);
 						startActivity(mIntent); 
 					}
-				});  */
+				});  
 	}
 
 	@Override

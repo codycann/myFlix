@@ -56,6 +56,7 @@ public class pullDatabase extends AsyncTask<String, Void, Boolean>
             	catch(JSONException e){ 
             		Log.e("log_tag", "Error parsing data "+e.toString());
     	        	done = true;
+    	        	//pDialog.dismiss();
             		return false;
             	}
 	            Log.v("mytag","finished pulling data");

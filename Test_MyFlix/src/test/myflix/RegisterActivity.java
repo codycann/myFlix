@@ -105,6 +105,11 @@ public class RegisterActivity extends Activity {
 				query.execute("INSERT INTO login (email, password) VALUES ('"+mEmail+"','"+mPassword+"')");
 				return true;
 			}
+			else{
+				mEmailView.setError(getString(R.string.error_invalid_email));
+				focusView = mEmailView;
+				return false;
+			}
 		}
 		return false;
 	}

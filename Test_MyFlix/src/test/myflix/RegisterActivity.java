@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -44,20 +43,15 @@ public class RegisterActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						Intent mIntent = new Intent(getApplicationContext(), LoginActivity.class);
-						startActivity(mIntent); 
+						if(attemptRegister()){
+							Intent mIntent = new Intent(getApplicationContext(), LoginActivity.class);
+							startActivity(mIntent); 
+						}
 					}
 				});
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.register, menu);
-		return true;
-	}
-
-	public boolean attemptLogin() {
+	public boolean attemptRegister() {
 
 		// Reset errors.
 		mEmailView.setError(null);
@@ -100,8 +94,7 @@ public class RegisterActivity extends Activity {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-			if (query.execute("SELECT * FROM login WHERE email = "+mEmail+"")=null) 
-			{
+			if (query.execute("SELECT * FROM login WHERE email = "+mEmail+"")==null){ 
 				query.execute("INSERT INTO login (email, password) VALUES ('"+mEmail+"','"+mPassword+"')");
 				return true;
 			}
@@ -111,6 +104,5 @@ public class RegisterActivity extends Activity {
 				return false;
 			}
 		}
-		return false;
 	}
 }

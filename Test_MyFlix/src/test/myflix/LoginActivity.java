@@ -1,10 +1,17 @@
 package test.myflix;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.Time;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,11 +31,16 @@ public class LoginActivity extends Activity {
 	private EditText mPasswordView;
 	private TextView mLoginStatusMessageView;
 	
+	pullDatabase dataTask;
 	PostQuery query;
+	ActionBar mActionBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		dataTask = new pullDatabase(this);
+		onStartup();
 
 		setContentView(R.layout.activity_login);
 		query = new PostQuery(this);
@@ -54,18 +66,40 @@ public class LoginActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						Intent mIntent = new Intent(getApplicationContext(), MovieCollection.class);
+						Intent mIntent = new Intent(getApplicationContext(), RegisterActivity.class);
 						startActivity(mIntent); 
 					}
 				});  */
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.login, menu);
-		return true;
-	}
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+	    MenuItem item= menu.findItem(R.id.action_video);
+	    item.setEnabled(false);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent mIntent;
+    	switch (item.getItemId()) {
+    		case R.id.action_search:
+    			//mIntent = new Intent(getApplicationContext(), SearchActivity.class);
+				//startActivity(mIntent); 
+    			return true;
+    		case R.id.action_collection:
+    			mIntent = new Intent(getApplicationContext(), MovieCollection.class);
+				startActivity(mIntent); 
+    			return true;
+    		case R.id.action_video:
+    			mIntent = new Intent(getApplicationContext(), VideoViewActivity.class);
+				startActivity(mIntent); 
+    			return true;
+    		default:
+    			return true;
+    		}
+    }
 
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
@@ -121,6 +155,27 @@ public class LoginActivity extends Activity {
 			}
 		}
 		return false;
+	}
+	private void onStartup(){
+		//checks for the last time the app was updated
+		SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
+		String date = prefs.getString("pullDate", "0000-00-00");
+		Time now = new Time();
+		now.setToNow();
+		now.format3339(true);
+		prefs.edit().putString("pullDate", now.toString()).commit();
+		if (!date.equals(now.toString())){
+			dataTask = new pullDatabase(this);
+			dataTask.execute(date);
+			while (dataTask.done == false) { //Loops at .1 sec intervals until AsyncTask has finished  
+				try { Thread.sleep(100); 
+			    	Log.v("mytag","still looping!");
+			    	
+			    }
+			    catch (InterruptedException e) { e.printStackTrace(); }
+			}
+			Log.v("mytag","made it out of the loop!");
+		}
 	}
 }
 

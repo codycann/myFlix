@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.MediaController;
 import android.widget.VideoView;
  
@@ -72,9 +74,7 @@ public class VideoViewActivity extends Activity {
             }
            
         }
-        
-       
-        
+      
         // Create a progressbar
         pDialog = new ProgressDialog(VideoViewActivity.this);
         // Set progressbar title
@@ -82,7 +82,7 @@ public class VideoViewActivity extends Activity {
         // Set progressbar message
         pDialog.setMessage("Buffering...");
         pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
+        pDialog.setCancelable(true);
         
      // Execute StreamVideo AsyncTask
         try {
@@ -108,6 +108,12 @@ public class VideoViewActivity extends Activity {
             }
         });
         
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item= menu.findItem(R.id.action_video);
+        item.setEnabled(true);
+        return super.onPrepareOptionsMenu(menu);
     }
     
     @Override

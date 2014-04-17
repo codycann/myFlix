@@ -74,7 +74,7 @@ public class RegisterActivity extends Activity {
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
 			cancel = true;
-		} else if (mPassword.length() < 4) {
+		} else if ((mPassword.length() < 4) || (mPassword.length() > 15) ) {
 			mPasswordView.setError(getString(R.string.error_invalid_password));
 			focusView = mPasswordView;
 			cancel = true;
@@ -100,9 +100,9 @@ public class RegisterActivity extends Activity {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-			if (query.execute("SELECT * FROM login WHERE email = "+mEmail+"")!=null) 
+			if (query.execute("SELECT * FROM login WHERE email = "+mEmail+"")=null) 
 			{
-				query.execute("INSERT * FROM login WHERE email = "+mEmail+" AND password = "+mPassword+"");
+				query.execute("INSERT INTO login (email, password) VALUES ('"+mEmail+"','"+mPassword+"')");
 				return true;
 			}
 		}

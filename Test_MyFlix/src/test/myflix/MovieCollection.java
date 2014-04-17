@@ -26,7 +26,7 @@ public class MovieCollection extends FragmentActivity {
 	  public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mActionBar = this.getActionBar();
-		onStartup();
+		//onStartup();
 		setContentView(R.layout.moviecollection);
 		List<Fragment> fragments = getFragments();
 		mActionBar.setTitle(fragments.get(0).getArguments().getString(EXTRA_MESSAGE));
@@ -60,10 +60,16 @@ public class MovieCollection extends FragmentActivity {
 	  }
 private List<Fragment> getFragments(){
 	  List<Fragment> fList = new ArrayList<Fragment>();
-	  fList.add(GridFragment.newInstance(new String[] {"%Comedy%"},"Comedy",this.getApplicationContext()));
-	  fList.add(GridFragment.newInstance(new String[] {"%Drama%"},"Drama", this)); 
+	  fList.add(GridFragment.newInstance(new String[] {"%Action%"},"Action",this));
+	  fList.add(GridFragment.newInstance(new String[] {"%Adventure%"},"Adventure",this));
+	  fList.add(GridFragment.newInstance(new String[] {"%Comedy%"},"Comedy",this));
+	  fList.add(GridFragment.newInstance(new String[] {"%Crime%"},"Crime",this));
+	  fList.add(GridFragment.newInstance(new String[] {"%Drama%"},"Drama", this));
+	  fList.add(GridFragment.newInstance(new String[] {"%Honor%"},"Honor", this)); 
 	  fList.add(GridFragment.newInstance(new String[] {"%Romance%"},"Romance", this));
-	  fList.add(GridFragment.newInstance(new String[] {"%Romance%", "%Comedy%"},"Romance/Comedy", this));
+	  fList.add(GridFragment.newInstance(new String[] {"%Science Fiction%"},"Science Fiction", this));
+	  fList.add(GridFragment.newInstance(new String[] {"%War%"},"War", this));
+
 	  //add to list for every genre page
 
 	  return fList;

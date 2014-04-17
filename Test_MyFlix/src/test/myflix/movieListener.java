@@ -13,7 +13,7 @@ class movieListener implements OnClickListener{
  }
 
  public void onClick(View v){
-	 Intent mIntent = new Intent(v.getContext(), VideoViewActivity.class);
+	 Intent mIntent = new Intent(v.getContext(), InfoScreen.class);
 	 Bundle mBundle = new Bundle();
 	 mBundle.putString("title", title);
 	 mIntent.putExtras(mBundle);

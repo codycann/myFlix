@@ -62,11 +62,11 @@ public class DatabaseQuery {
 	 * @return Returns an ArrayList<String> with the results of the selected field.
 	 */
 	public ArrayList<String> getCol(String key, String selection, String[] 
-		    selectionArgs, String groupBy, String having, String sortBy, String sortOption){
+		    selectionArgs, String groupBy, String having, String sortBy, String sortOption, String limit){
 			String[] column = {key};
 			ArrayList<String> list = new ArrayList<String>(); 
 			Cursor results = database.getAllEntries(column, selection, 
-					selectionArgs, groupBy, having, sortBy, sortOption);
+					selectionArgs, groupBy, having, sortBy, sortOption, limit);
 			while(results.moveToNext())
 				list.add(results.getString(0));
 			results.close();
@@ -104,7 +104,7 @@ public class DatabaseQuery {
 		return getRow("title = ?", new String[]{title});
 	}
 	public ArrayList<String> titleByGenre(String genre){
-		return getCol("title", "title like ", new String[]{"%"+genre+"%"}, null, null, null, "");
+		return getCol("title", "title like ", new String[]{"%"+genre+"%"}, null, null, null, "", null);
 	}
 	
 	public void destroy() throws Throwable{

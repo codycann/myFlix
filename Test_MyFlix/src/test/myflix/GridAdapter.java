@@ -100,8 +100,8 @@ public class GridAdapter extends BaseAdapter {
 			condition = condition + " AND genre like ?";
 		}
 		
-		titles = siteData.getCol("title", condition, genreArray, null, null, null, "");
-		rating = siteData.getCol("imdbRating", condition, genreArray, null, null, null, "");
+		titles = siteData.getCol("title", condition, genreArray, null, null, null, "", "20");
+		rating = siteData.getCol("imdbRating", condition, genreArray, null, null, null, "", "20");
 		siteData.manualClose();
 		imageList = imageContainer.getThumbnail(titles);
 

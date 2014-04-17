@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.view.Menu;
 
 
-public class SearchActivity extends Activity implements ListView.OnItemClickListener { {
+public class SearchActivity extends Activity implements ListView.OnItemClickListener {
 	ArrayList<String> titles;
 	ArrayList<String> ratings;
 	private DrawerLayout mDrawerLayout;
@@ -70,8 +70,8 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 		int size = populate();
 		if(size == 0) return false;
 		String[] passArgs = (String[]) args.toArray();
-		titles = siteData.getCol("title", selection, passArgs, null, null, sortBy, null);
-		titles = siteData.getCol("imdbRating", selection, passArgs, null, null, sortBy, null);
+		titles = siteData.getCol("title", selection, passArgs, null, null, sortBy, null, "30");
+		titles = siteData.getCol("imdbRating", selection, passArgs, null, null, sortBy, null,"30");
 		return true;
 		
 	}

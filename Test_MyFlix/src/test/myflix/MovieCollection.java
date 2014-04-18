@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,20 +32,29 @@ public class MovieCollection extends FragmentActivity {
 		pager.setPageTransformer(true, new PageTransformer());
 		pager.setAdapter(pageAdapter);
 	  }
-	    @Override
+		@Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
 	        MenuInflater inflater = getMenuInflater();
 	        inflater.inflate(R.menu.activity_main_actions, menu);
+		    MenuItem item= menu.findItem(R.id.action_video);
+		    item.setEnabled(false);
 	        return super.onCreateOptionsMenu(menu);
 	    }
 	    @Override
 		public boolean onOptionsItemSelected(MenuItem item) {
+			Intent mIntent;
 	    	switch (item.getItemId()) {
 	    		case R.id.action_search:
+	    			mIntent = new Intent(getApplicationContext(), SearchActivity.class);
+					startActivity(mIntent); 
 	    			return true;
 	    		case R.id.action_collection:
+	    			mIntent = new Intent(getApplicationContext(), MovieCollection.class);
+					startActivity(mIntent); 
 	    			return true;
 	    		case R.id.action_video:
+	    			mIntent = new Intent(getApplicationContext(), VideoViewActivity.class);
+					startActivity(mIntent); 
 	    			return true;
 	    		default:
 	    			return true;
@@ -73,26 +79,5 @@ private List<Fragment> getFragments(){
 	  //add to list for every genre page
 
 	  return fList;
-	}
-private void onStartup(){
-	//checks for the last time the app was updated
-	SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
-	String date = prefs.getString("pullDate", "0000-00-00");
-	Time now = new Time();
-	now.setToNow();
-	now.format3339(true);
-	prefs.edit().putString("pullDate", now.toString()).commit();
-	if (!date.equals(now.toString())){
-		dataTask = new pullDatabase(this);
-		dataTask.execute(date);
-		while (dataTask.done == false) { //Loops at .1 sec intervals until AsyncTask has finished  
-			try { Thread.sleep(100); 
-		    	Log.v("mytag","still looping!");
-		    	
-		    }
-		    catch (InterruptedException e) { e.printStackTrace(); }
-		}
-		Log.v("mytag","made it out of the loop!");
-	}
 }
 }

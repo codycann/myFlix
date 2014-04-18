@@ -6,7 +6,7 @@
  android:layout_height="match_parent">
     
     <!-- The main content view -->
-	<LinearLayout 
+	<RelativeLayout 
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent">
 	    <EditText
@@ -19,22 +19,32 @@
 	        android:id="@+id/field_genre"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	       	android:hint="Genre">
+	       	android:hint="Genre"
+	       	android:layout_below="@+id/field_title">
 	    </EditText>
 	    <EditText
 	        android:id="@+id/field_keyword"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	       	android:hint="Keyword">
+	       	android:hint="Keyword"
+	     	android:layout_below="@+id/field_genre">
 	    </EditText>
 	   	<EditText
 	        android:id="@+id/field_actor"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	       	android:hint="Actor">
+	       	android:hint="Actor"
+	     	android:layout_below="@+id/field_keyword">
 	    </EditText>
-	    
-	</LinearLayout>
+	    <Button
+	      	android:id="@+id/button_search"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:text="SEARCH"
+	        android:layout_below="@+id/field_actor">
+	    </Button>
+	</RelativeLayout>
 	
 	<android.support.v4.widget.DrawerLayout
 	    android:id="@+id/drawer_layout"

@@ -4,9 +4,14 @@ package test.myflix;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +22,7 @@ public class InfoScreen extends Activity {
     DatabaseQuery data;
     ArrayList<String> titlelist;
     ArrayList<String> datalist;
+    ArrayList<Bitmap> posterStorage;
     Bitmap poster;
     String title;
     ImageView picture;
@@ -33,28 +39,24 @@ public class InfoScreen extends Activity {
     ScaleableTextView description;
     Button playbutton;
     Button addbutton;
+    ActionBar mActionBar;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_screen);
+        mActionBar = this.getActionBar();
+        ArrayList<String> titlelist = new ArrayList<String>();
+        image = new ImageStorage(getApplicationContext());
+        data = new DatabaseQuery(getApplicationContext());
         Bundle extras = this.getIntent().getExtras();
         title = extras.getString("title");
+        mActionBar.setTitle(title);
         titlelist.add(title);
-        poster = image.getThumbnail(titlelist).get(0);
+        posterStorage = image.getThumbnail(titlelist);
+        poster = posterStorage.get(0);
         datalist = data.byTitle(title);
         
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_main_actions, menu);
-        return true;
-    }
-    
-    protected void onCreateView(){
     	description = (ScaleableTextView) findViewById(R.id.description);
 		description.setText(datalist.get(6));
 		
@@ -90,10 +92,36 @@ public class InfoScreen extends Activity {
 		
 		picture = (ImageView) findViewById(R.id.movie_poster);
 		picture.setImageBitmap(poster);
-		
+        
     }
-    
-    
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+	    MenuItem item= menu.findItem(R.id.action_video);
+	    item.setEnabled(false);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent mIntent;
+    	switch (item.getItemId()) {
+    		case R.id.action_search:
+    			mIntent = new Intent(getApplicationContext(), SearchActivity.class);
+				startActivity(mIntent); 
+    			return true;
+    		case R.id.action_collection:
+    			mIntent = new Intent(getApplicationContext(), MovieCollection.class);
+				startActivity(mIntent); 
+    			return true;
+    		case R.id.action_video:
+    			mIntent = new Intent(getApplicationContext(), VideoViewActivity.class);
+				startActivity(mIntent); 
+    			return true;
+    		default:
+    			return true;
+    		}
+    }
 }
 
 

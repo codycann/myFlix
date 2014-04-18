@@ -85,8 +85,8 @@ public class LoginActivity extends Activity {
 		Intent mIntent;
     	switch (item.getItemId()) {
     		case R.id.action_search:
-    			//mIntent = new Intent(getApplicationContext(), SearchActivity.class);
-				//startActivity(mIntent); 
+    			mIntent = new Intent(getApplicationContext(), SearchActivity.class);
+				startActivity(mIntent); 
     			return true;
     		case R.id.action_collection:
     			mIntent = new Intent(getApplicationContext(), MovieCollection.class);
@@ -148,7 +148,6 @@ public class LoginActivity extends Activity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			if (query.execute("SELECT * FROM login WHERE email = "+mEmail+" AND password = "+mPassword+"")!=null) 
 			{
 				return true;

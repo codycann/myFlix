@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 public class DatabaseQuery {
 	// Variables area
@@ -78,10 +79,13 @@ public class DatabaseQuery {
 			ArrayList<String> list = new ArrayList<String>(); 
 			Cursor results = database.getAllEntries(null, selection, 
 					selectionArgs, null, null, null, "");
-			while(results.moveToNext())
-				for(int i = 0; i < databaseKeys.size(); i++){
-					list.add(results.getString(results.getColumnIndex(databaseKeys.get(i))));
+			while(results.moveToNext()){
+				String[] cols = results.getColumnNames();
+				for(int i = 0; i < cols.length; i++){
+					list.add(results.getString(results.getColumnIndexOrThrow(cols[i])));
+					//list.add(results.getString(results.getColumnIndexOrThrow(databaseKeys.get(i))));
 				}
+			}
 			results.close();
 			return list;
 	}
@@ -93,7 +97,7 @@ public class DatabaseQuery {
 			while(results.moveToNext()){
 				ArrayList<String> row = new ArrayList<String>();
 				for(int i = 0; i < keys.length; i++){
-					row.add(results.getString(results.getColumnIndex(keys[i])));
+					row.add(results.getString(results.getColumnIndexOrThrow(keys[i])));
 				}
 				list.add(row);
 			}

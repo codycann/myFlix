@@ -46,7 +46,7 @@ public class RegisterActivity extends Activity {
 					@Override
 					public void onClick(View view) {
 						if(attemptRegister()){
-							Toast.makeText(getApplicationContext(), "Registration", 1000).show();
+							Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_SHORT).show();
 							Intent mIntent = new Intent(getApplicationContext(), LoginActivity.class);
 							startActivity(mIntent); 
 						}

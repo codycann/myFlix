@@ -95,7 +95,7 @@ public class ImageStorage {
 		Bitmap thumbnail = null;
 		if (isSdReadable() == true) {
 			file_title = title.replace(":", "()");
-			File f = new File(fullPath + "/myflix/" + title + ".jpeg");
+			File f = new File(fullPath + "/myflix/" + file_title + ".jpeg");
 			/*BitmapFactory.Options o = new BitmapFactory.Options();
 	        o.inJustDecodeBounds = true;
 	        try {
@@ -112,7 +112,6 @@ public class ImageStorage {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//thumbnail = BitmapFactory.decodeFile(fullPath + "/myflix/" + title + ".jpeg");
 			Log.v("checkimage", file_title);
 		}
 		if(thumbnail == null){

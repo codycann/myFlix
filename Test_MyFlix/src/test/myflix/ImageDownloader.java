@@ -46,6 +46,7 @@ public class ImageDownloader extends AsyncTask<ArrayList<String>, Void, ArrayLis
 	        protected ArrayList<Bitmap> doInBackground(ArrayList<String>... args) {
 	        	for(int i = 0; i < args[0].size(); i++){
 		            try {
+		            	
 		    			file_title = args[0].get(i).replace(":", "()");
 		            	String url = "http://cannonmovies.us/posters/"+file_title+".jpeg";
 		            	url = url.replace(" ", "%20");

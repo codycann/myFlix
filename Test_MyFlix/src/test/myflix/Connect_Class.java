@@ -58,11 +58,13 @@ public JSONArray newQuery(String query) {
 	}
 	catch(Exception e){
 	        Log.e("log_tag", "Error converting result "+e.toString());
+	        return null;
 	}
 	try{
 			jArray = new JSONArray(result);
 	}catch(JSONException e){
 	        Log.e("log_tag", "Error parsing data "+e.toString());
+	        return null;
 	}
 	return jArray;
 }

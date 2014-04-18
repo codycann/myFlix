@@ -44,7 +44,7 @@ public class LoginActivity extends Activity {
 		dataTask = new pullDatabase(this);
 
 		setContentView(R.layout.activity_login);
-		query = new PostQuery(this, "Signing in...");
+		
 		
 		// Set up the login form.
 		mEmailView = (EditText) findViewById(R.id.email);
@@ -150,10 +150,20 @@ public class LoginActivity extends Activity {
 			// form field with an error.
 			focusView.requestFocus();
 			return false;
-		} else {
+		} else 
+		{
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			if (query.execute("SELECT * FROM login WHERE email = "+mEmail+" AND password = "+mPassword+"")!=null) 
+			query = new PostQuery(this, "Signing in...");
+			query.execute("SELECT * FROM login WHERE email = "+mEmail+" AND password = "+mPassword+"");
+			while(query.finished == false)
+			{
+		    	try { Thread.sleep(100); 
+		    		Log.v("mytag","still looping!");
+		    	}
+		    	catch (InterruptedException e) { e.printStackTrace(); }
+			}
+			if (query.getResult()!=null) 
 			{
 				return true;
 			}
@@ -163,12 +173,14 @@ public class LoginActivity extends Activity {
 	private void onStartup(){
 		//checks for the last time the app was updated
 		SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
-		String date = prefs.getString("pullDate", "0000-00-00");
 		Time now = new Time();
+		Time previous = new Time();
+		String lastUpdate = prefs.getString("pullDate", "2000-01-01");
+		previous.parse3339(lastUpdate);
 		now.setToNow();
-		now.format3339(true);
-		prefs.edit().putString("pullDate", now.toString()).commit();
-		if (!date.equals(now.toString())){
+		now.parse3339(now.format3339(true));
+		prefs.edit().putString("pullDate", now.format3339(true)).commit();
+		if (now.after(previous)){
 			dataTask = new pullDatabase(this);
 			/*ProgressDialog pDialog = new ProgressDialog(getApplicationContext());
 	        pDialog.setTitle("New Content");
@@ -177,7 +189,7 @@ public class LoginActivity extends Activity {
             pDialog.setCancelable(false);
             pDialog.show(); 
             */
-			dataTask.execute(date);
+			dataTask.execute(lastUpdate);
 			while (dataTask.done == false) { //Loops at .1 sec intervals until AsyncTask has finished  
 				try { Thread.sleep(100); 
 			    	Log.v("mytag","still looping!");

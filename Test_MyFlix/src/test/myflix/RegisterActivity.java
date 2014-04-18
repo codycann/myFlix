@@ -76,7 +76,7 @@ public class RegisterActivity extends Activity {
 			focusView = mPasswordView;
 			cancel = true;
 		}
-
+		
 		// Check for a valid email address.
 		if (TextUtils.isEmpty(mEmail)) {
 			mEmailView.setError(getString(R.string.error_field_required));

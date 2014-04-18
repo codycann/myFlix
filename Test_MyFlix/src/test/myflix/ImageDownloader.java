@@ -81,7 +81,7 @@ public class ImageDownloader extends AsyncTask<ArrayList<String>, Void, ArrayLis
 						Log.v("file_title", file_title);
 						try {
 					    outStream = new FileOutputStream(file);
-					    bmImg.compress(Bitmap.CompressFormat.JPEG, 20, outStream);
+					    bmImg.compress(Bitmap.CompressFormat.JPEG, 10, outStream);
 					    outStream.flush();
 					    outStream.close();          		   
 						} catch (FileNotFoundException e) {

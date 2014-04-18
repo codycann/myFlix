@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class SearchAdapter extends ArrayAdapter<Movie>{
     public void refresh(ArrayList<Movie> list) {  
         data = list;  
         notifyDataSetChanged();  
-    }  
+    }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;

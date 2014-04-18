@@ -4,17 +4,19 @@ import java.util.ArrayList;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.ListView;
 import android.view.Menu;
 
@@ -25,7 +27,6 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	ArrayList<String> ratings;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
-	private ArrayAdapter<String> titlesAdapter;
     DatabaseQuery siteData;
 	EditText TitleView;
 	EditText GenreView;
@@ -46,16 +47,23 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_page);
-        //titlesAdapter = new ArrayAdapter<String>(null, numFields, args)
 		adapter = new SearchAdapter(this, R.layout.search_result_row, movie_data);
         mDrawerList = (ListView) findViewById(R.id.right_drawer);
         mDrawerList.setAdapter(adapter);
-        mDrawerList.setOnItemClickListener(this);
-        //mDrawerLayout.setDrawerListener(mDrawerToggle);
 		mActionBar = this.getActionBar();
 		mActionBar.setTitle("Movie Search");
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
+        OnItemClickListener listener = new OnItemClickListener (){
+      	  @Override
+      	  public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+      		  String title = ((TextView) view.findViewById(R.id.textview_title)).getText().toString();
+      		 Intent mIntent = new Intent(view.getContext(), InfoScreen.class);
+      		 Bundle mBundle = new Bundle();
+      		 mBundle.putString("title", title);      		 mIntent.putExtras(mBundle);
+      		 view.getContext().startActivity(mIntent); 
+      	  }
+      	};
+      	mDrawerList.setOnItemClickListener(listener);
         TitleView = (EditText) findViewById(R.id.field_title);
         GenreView = (EditText) findViewById(R.id.field_genre);
         ActorView = (EditText) findViewById(R.id.field_actor);
@@ -69,25 +77,36 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
             	}
             }
         });
-     
-		
-        //mDrawerLayout.setDrawerListener(mDrawerToggle);
-
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.search, menu);
-		return true;
-	}
-	
-	/** Called when the user touches the button */
-	public void sendMessage(View view) {
-	    // use fields to query db
-		
-	}
-    
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+	    MenuItem item= menu.findItem(R.id.action_video);
+	    item.setEnabled(false);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent mIntent;
+    	switch (item.getItemId()) {
+    		case R.id.action_search:
+    			mIntent = new Intent(getApplicationContext(), SearchActivity.class);
+				startActivity(mIntent); 
+    			return true;
+    		case R.id.action_collection:
+    			mIntent = new Intent(getApplicationContext(), MovieCollection.class);
+				startActivity(mIntent); 
+    			return true;
+    		case R.id.action_video:
+    			mIntent = new Intent(getApplicationContext(), VideoViewActivity.class);
+				startActivity(mIntent); 
+    			return true;
+    		default:
+    			return true;
+    		}
+    }
     
 	public boolean search(){
 		DatabaseQuery siteData = new DatabaseQuery(this);

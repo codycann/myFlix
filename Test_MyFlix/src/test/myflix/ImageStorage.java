@@ -1,6 +1,8 @@
 package test.myflix;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -93,7 +95,24 @@ public class ImageStorage {
 		Bitmap thumbnail = null;
 		if (isSdReadable() == true) {
 			file_title = title.replace(":", "()");
-			thumbnail = BitmapFactory.decodeFile(fullPath + "/myflix/" + title + ".jpeg");
+			File f = new File(fullPath + "/myflix/" + title + ".jpeg");
+			/*BitmapFactory.Options o = new BitmapFactory.Options();
+	        o.inJustDecodeBounds = true;
+	        try {
+				BitmapFactory.decodeStream(new FileInputStream(f),null,o);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+			BitmapFactory.Options options=new BitmapFactory.Options();
+			options.inSampleSize = 2;
+			try {
+				thumbnail = BitmapFactory.decodeStream(new FileInputStream(f),null,options);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//thumbnail = BitmapFactory.decodeFile(fullPath + "/myflix/" + title + ".jpeg");
 			Log.v("checkimage", file_title);
 		}
 		if(thumbnail == null){

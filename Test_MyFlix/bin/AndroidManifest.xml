@@ -34,6 +34,7 @@
         <activity android:name="test.myflix.GridAdapter" ></activity>
         <activity android:name="test.myflix.PageviewAdapter" ></activity>
         <activity android:name="test.myflix.MovieCollection" > </activity>
+        <activity android:name="test.myflix.InfoScreen"></activity>
         <activity
             android:name="test.myflix.VideoViewActivity"
             android:configChanges="orientation|keyboardHidden"

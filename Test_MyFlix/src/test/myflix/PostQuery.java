@@ -11,15 +11,17 @@ public class PostQuery extends AsyncTask<String, Void, JSONArray>
 	    {
 			JSONArray json = null;
 	        private Context context;
+	        String dialogText;
 	        private ProgressDialog pDialog;
 	        Connect_Class siteQuery = new Connect_Class();
-	        public PostQuery(Context context) {
+	        public PostQuery(Context context, String dialog) {
 	            this.context = context;
+	            dialogText = dialog;
 	        }
 	        protected void onPreExecute() {
 	            // TODO Auto-generated method stub
 	            pDialog = new ProgressDialog(context);
-	            pDialog.setMessage("Downloading Info ...");
+	            pDialog.setMessage(dialogText);
 	            pDialog.setIndeterminate(false);
 	            pDialog.setCancelable(false);
 	            pDialog.show();

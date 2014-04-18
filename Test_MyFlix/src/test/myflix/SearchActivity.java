@@ -8,6 +8,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,26 +33,29 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	EditText ActorView;
 	Button search;
 	ArrayList<String> args = new ArrayList<String>();
-	String[] fieldName = {"title", "genre", "actor", "keyword"};
-	String[] fields = {null, null, null, null}; //Fields are title, genre, actor, keyword;
-	int numFields = 4;
+	String[] fieldName = {"Title", "Genre", "Actors", "Plot"};
+	String[] fields = {"", "", "", ""};
+	String[] reset = {"", "", "", ""};//Fields are title, genre, actor, keyword;
+	int numFields = fields.length;
 	String sortBy = null;
 	String selection = "";
 	ActionBar mActionBar;
+	SearchAdapter adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_page);
         //titlesAdapter = new ArrayAdapter<String>(null, numFields, args)
-		SearchAdapter adapter = new SearchAdapter(this, R.layout.search_result_row, movie_data);
+		adapter = new SearchAdapter(this, R.layout.search_result_row, movie_data);
+        mDrawerList = (ListView) findViewById(R.id.right_drawer);
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(this);
         //mDrawerLayout.setDrawerListener(mDrawerToggle);
 		mActionBar = this.getActionBar();
 		mActionBar.setTitle("Movie Search");
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.right_drawer);
+
         TitleView = (EditText) findViewById(R.id.field_title);
         GenreView = (EditText) findViewById(R.id.field_genre);
         ActorView = (EditText) findViewById(R.id.field_actor);
@@ -60,7 +64,7 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
         search.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
             	if(search()){
-            		titlesAdapter.addAll(titles);
+            		adapter.refresh(movie_data);
             		mDrawerLayout.openDrawer(Gravity.LEFT);
             	}
             }
@@ -90,9 +94,9 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 		popField();
 		int size = populate();
 		if(size == 0) return false;
-		String[] passArgs = (String[]) args.toArray();
-		titles = siteData.getCol("title", selection, passArgs, null, null, sortBy, null, "30");
-		ratings = siteData.getCol("imdbRating", selection, passArgs, null, null, sortBy, null,"30");
+		String[] passArgs = args.toArray(new String[args.size()]);
+		titles = siteData.getCol("Title", selection, passArgs, null, null, sortBy, "", "30");
+		ratings = siteData.getCol("imdbRating", selection, passArgs, null, null, sortBy, "","30");
 		for(int i = 0; i < titles.size(); i++){
 			movie_data.add(new Movie(titles.get(i), ratings.get(i)));
 		}
@@ -100,16 +104,30 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 		
 	}
 	private void popField(){
-		fields[1] = TitleView.getText().toString();
-		fields[2] = GenreView.getText().toString();
-		fields[3] = ActorView.getText().toString();
-		fields[4] = KeywordView.getText().toString();
+		fields = reset.clone();
+		if(TitleView.getText().toString().length() != 0){
+			fields[0] = TitleView.getText().toString();
+		}
+		if(GenreView.getText().toString().length() != 0){
+			fields[1] = GenreView.getText().toString();
+		}
+		if(ActorView.getText().toString().length() != 0){
+			fields[2] = ActorView.getText().toString();
+		}
+		if(KeywordView.getText().toString().length() != 0){
+			fields[3] = KeywordView.getText().toString();
+		}
+		for(int i = 0; i < fields.length; i++){
+			Log.v("fields", fields[i]);
+		}
 		sortBy = null;
 	}
 	private int populate(){
 		int size = 0;
+		args.clear();
+		selection = "";
 		for(int i = 0; i < numFields; i++){
-			if(fields[i] != null){
+			if(fields[i] != ""){
 				if(size > 0) selection = selection + " AND ";
 				selection = selection + fieldName[i] + " like ? ";
 				args.add("%"+fields[i]+"%");

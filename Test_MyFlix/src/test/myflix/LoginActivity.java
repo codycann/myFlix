@@ -2,6 +2,8 @@ package test.myflix;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,10 +42,9 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		dataTask = new pullDatabase(this);
-		onStartup();
 
 		setContentView(R.layout.activity_login);
-		query = new PostQuery(this);
+		query = new PostQuery(this, "Signing in...");
 		
 		// Set up the login form.
 		mEmailView = (EditText) findViewById(R.id.email);
@@ -69,7 +70,7 @@ public class LoginActivity extends Activity {
 						Intent mIntent = new Intent(getApplicationContext(), RegisterActivity.class);
 						startActivity(mIntent); 
 					}
-				});  
+				}); 
 	}
 
 	@Override
@@ -100,7 +101,11 @@ public class LoginActivity extends Activity {
     			return true;
     		}
     }
-
+    @Override
+    protected void onPostCreate (Bundle savedInstanceState){
+    	super.onPostCreate(savedInstanceState);
+    	onStartup();
+    }
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
@@ -165,6 +170,13 @@ public class LoginActivity extends Activity {
 		prefs.edit().putString("pullDate", now.toString()).commit();
 		if (!date.equals(now.toString())){
 			dataTask = new pullDatabase(this);
+			/*ProgressDialog pDialog = new ProgressDialog(getApplicationContext());
+	        pDialog.setTitle("New Content");
+            pDialog.setMessage("Updating ...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show(); 
+            */
 			dataTask.execute(date);
 			while (dataTask.done == false) { //Loops at .1 sec intervals until AsyncTask has finished  
 				try { Thread.sleep(100); 
@@ -173,6 +185,7 @@ public class LoginActivity extends Activity {
 			    }
 			    catch (InterruptedException e) { e.printStackTrace(); }
 			}
+			//pDialog.dismiss();
 			Log.v("mytag","made it out of the loop!");
 		}
 	}

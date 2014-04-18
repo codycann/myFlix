@@ -22,6 +22,10 @@ public class SearchAdapter extends ArrayAdapter<Movie>{
         this.context = context;
         this.data = data;
     }
+    public void refresh(ArrayList<Movie> list) {  
+        data = list;  
+        notifyDataSetChanged();  
+    }  
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;

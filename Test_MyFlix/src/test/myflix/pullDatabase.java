@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -17,7 +16,6 @@ public class pullDatabase extends AsyncTask<String, Void, Boolean>
 			boolean done = false;
 			JSONArray json;
 	        private Context context;
-	        private ProgressDialog pDialog;
 	        Connect_Class siteQuery = new Connect_Class();
 	    	DatabaseQuery siteData;
 	        public pullDatabase(Context context) {
@@ -28,12 +26,7 @@ public class pullDatabase extends AsyncTask<String, Void, Boolean>
 	        @Override
 	        protected void onPreExecute() {
 	            // TODO Auto-generated method stub
-	            pDialog = new ProgressDialog(this.context);
-	            pDialog.setTitle("New Content");
-	            pDialog.setMessage("Updating ...");
-	            pDialog.setIndeterminate(false);
-	            pDialog.setCancelable(false);
-	            pDialog.show();
+	           
 	        }
 	        @Override
 	        protected Boolean doInBackground(String... date) {
@@ -56,7 +49,6 @@ public class pullDatabase extends AsyncTask<String, Void, Boolean>
             	catch(JSONException e){ 
             		Log.e("log_tag", "Error parsing data "+e.toString());
     	        	done = true;
-    	        	//pDialog.dismiss();
             		return false;
             	}
 	            Log.v("mytag","finished pulling data");
@@ -67,7 +59,6 @@ public class pullDatabase extends AsyncTask<String, Void, Boolean>
 	        protected void onPostExecute(Boolean result) {
 	            // TODO Auto-generated method stub
 	            Log.v("mytag","post execute");
-	            pDialog.dismiss();
 	            return;
 	        }
 }

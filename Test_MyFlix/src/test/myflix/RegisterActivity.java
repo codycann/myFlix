@@ -32,7 +32,7 @@ public class RegisterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_register);
-		query = new PostQuery(this);
+		query = new PostQuery(this, "Registering...");
 
 		// Set up the login form.
 		mEmailView = (EditText) findViewById(R.id.reg_email);

@@ -14,6 +14,65 @@ public final class R {
         public static final int runtime_array=0x7f060002;
     }
     public static final class attr {
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int dragView=0x7f010005;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int fadeColor=0x7f010003;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int flingVelocity=0x7f010004;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int overlay=0x7f010006;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int panelHeight=0x7f010000;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int paralaxOffset=0x7f010002;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int shadowHeight=0x7f010001;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -26,71 +85,74 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int background=0x7f020000;
-        public static final int border=0x7f020001;
-        public static final int ic_action_search=0x7f020002;
-        public static final int ic_action_slideshow=0x7f020003;
-        public static final int ic_action_switch_video=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
+        public static final int above_shadow=0x7f020000;
+        public static final int background=0x7f020001;
+        public static final int below_shadow=0x7f020002;
+        public static final int border=0x7f020003;
+        public static final int ic_action_search=0x7f020004;
+        public static final int ic_action_slideshow=0x7f020005;
+        public static final int ic_action_switch_video=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
     }
     public static final class id {
-        public static final int VideoView=0x7f090033;
-        public static final int action_collection=0x7f090035;
-        public static final int action_forgot_password=0x7f090038;
-        public static final int action_search=0x7f090034;
-        public static final int action_settings=0x7f090037;
-        public static final int action_video=0x7f090036;
-        public static final int actors=0x7f09001b;
-        public static final int add_button=0x7f090020;
-        public static final int awards=0x7f090018;
-        public static final int border_layout=0x7f090026;
-        public static final int button1=0x7f090015;
-        public static final int button_search=0x7f09002d;
-        public static final int description=0x7f09001a;
-        public static final int director=0x7f090023;
-        public static final int drawer_layout=0x7f09002e;
-        public static final int editText1=0x7f09000d;
-        public static final int editText2=0x7f09000e;
+        public static final int VideoView=0x7f090034;
+        public static final int action_collection=0x7f090036;
+        public static final int action_forgot_password=0x7f090039;
+        public static final int action_search=0x7f090035;
+        public static final int action_settings=0x7f090038;
+        public static final int action_video=0x7f090037;
+        public static final int actor_field=0x7f09000f;
+        public static final int actors=0x7f09001d;
+        public static final int add_button=0x7f090022;
+        public static final int awards=0x7f09001a;
+        public static final int border_layout=0x7f090028;
+        public static final int button_search=0x7f09002f;
+        public static final int description=0x7f09001c;
+        public static final int director=0x7f090025;
+        public static final int drawer_layout=0x7f090030;
         public static final int email=0x7f090003;
-        public static final int field_actor=0x7f09002c;
-        public static final int field_genre=0x7f09002a;
-        public static final int field_keyword=0x7f09002b;
-        public static final int field_title=0x7f090029;
-        public static final int genre=0x7f090019;
+        public static final int field_actor=0x7f09002e;
+        public static final int field_genre=0x7f09002c;
+        public static final int field_keyword=0x7f09002d;
+        public static final int field_title=0x7f09002b;
+        public static final int genre=0x7f09001b;
+        public static final int genre_field=0x7f090011;
         public static final int gridview1=0x7f090000;
-        public static final int gridview_genre=0x7f090016;
-        public static final int imdb_rating=0x7f09001d;
+        public static final int gridview_genre=0x7f090018;
+        public static final int imdb_rating=0x7f09001f;
+        public static final int keyword_field=0x7f090010;
         public static final int login=0x7f090005;
         public static final int login_form=0x7f090001;
-        public static final int movie_poster=0x7f09001c;
-        public static final int movie_rating=0x7f090027;
-        public static final int movie_title=0x7f09001e;
+        public static final int movie_poster=0x7f09001e;
+        public static final int movie_rating=0x7f090029;
+        public static final int movie_title=0x7f090020;
         public static final int password=0x7f090004;
-        public static final int play_button=0x7f090024;
-        public static final int radio0=0x7f090013;
-        public static final int radio1=0x7f090014;
+        public static final int play_button=0x7f090026;
+        public static final int radio0=0x7f090014;
+        public static final int radio1=0x7f090015;
         public static final int radioGroup1=0x7f090012;
-        public static final int rating=0x7f090022;
+        public static final int radiotextView=0x7f090013;
+        public static final int rating=0x7f090024;
         public static final int reg_email=0x7f09000a;
         public static final int reg_password=0x7f09000c;
         public static final int register_button=0x7f090007;
         public static final int register_form=0x7f090008;
-        public static final int result_item=0x7f090030;
-        public static final int right_drawer=0x7f09002f;
-        public static final int runtime=0x7f09001f;
-        public static final int scrollView1=0x7f090017;
+        public static final int result_item=0x7f090031;
+        public static final int right_drawer=0x7f090017;
+        public static final int runtime=0x7f090021;
+        public static final int scrollView1=0x7f090019;
+        public static final int searchButton=0x7f090016;
         public static final int sign_in_button=0x7f090006;
-        public static final int spinner1=0x7f09000f;
-        public static final int spinner2=0x7f090010;
-        public static final int spinner3=0x7f090011;
+        public static final int sliding_layout=0x7f09000d;
         public static final int textView1=0x7f090002;
         public static final int textView2=0x7f09000b;
         public static final int textView3=0x7f090009;
-        public static final int textview_rating=0x7f090032;
-        public static final int textview_title=0x7f090031;
-        public static final int viewpager=0x7f090028;
-        public static final int writer=0x7f090025;
-        public static final int year=0x7f090021;
+        public static final int textview_rating=0x7f090033;
+        public static final int textview_title=0x7f090032;
+        public static final int title_field=0x7f09000e;
+        public static final int viewpager=0x7f09002a;
+        public static final int writer=0x7f090027;
+        public static final int year=0x7f090023;
     }
     public static final class layout {
         public static final int activity_connect=0x7f030000;
@@ -131,6 +193,7 @@ public final class R {
         public static final int error_invalid_password=0x7f050011;
         public static final int genre_prompt=0x7f05001f;
         public static final int hello_world=0x7f050002;
+        public static final int keyword_hint=0x7f050024;
         public static final int login_progress_signing_in=0x7f05000f;
         public static final int login_title=0x7f050014;
         public static final int poster_desc=0x7f050003;
@@ -187,4 +250,133 @@ public final class R {
         public static final int AppTheme=0x7f070001;
         public static final int LoginFormContainer=0x7f070002;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a SlidingUpPanelLayout.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SlidingUpPanelLayout_dragView test.myflix:dragView}</code></td><td></td></tr>
+           <tr><td><code>{@link #SlidingUpPanelLayout_fadeColor test.myflix:fadeColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #SlidingUpPanelLayout_flingVelocity test.myflix:flingVelocity}</code></td><td></td></tr>
+           <tr><td><code>{@link #SlidingUpPanelLayout_overlay test.myflix:overlay}</code></td><td></td></tr>
+           <tr><td><code>{@link #SlidingUpPanelLayout_panelHeight test.myflix:panelHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #SlidingUpPanelLayout_paralaxOffset test.myflix:paralaxOffset}</code></td><td></td></tr>
+           <tr><td><code>{@link #SlidingUpPanelLayout_shadowHeight test.myflix:shadowHeight}</code></td><td></td></tr>
+           </table>
+           @see #SlidingUpPanelLayout_dragView
+           @see #SlidingUpPanelLayout_fadeColor
+           @see #SlidingUpPanelLayout_flingVelocity
+           @see #SlidingUpPanelLayout_overlay
+           @see #SlidingUpPanelLayout_panelHeight
+           @see #SlidingUpPanelLayout_paralaxOffset
+           @see #SlidingUpPanelLayout_shadowHeight
+         */
+        public static final int[] SlidingUpPanelLayout = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004, 0x7f010005, 0x7f010006
+        };
+        /**
+          <p>This symbol is the offset where the {@link test.myflix.R.attr#dragView}
+          attribute's value can be found in the {@link #SlidingUpPanelLayout} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name test.myflix:dragView
+        */
+        public static final int SlidingUpPanelLayout_dragView = 5;
+        /**
+          <p>This symbol is the offset where the {@link test.myflix.R.attr#fadeColor}
+          attribute's value can be found in the {@link #SlidingUpPanelLayout} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name test.myflix:fadeColor
+        */
+        public static final int SlidingUpPanelLayout_fadeColor = 3;
+        /**
+          <p>This symbol is the offset where the {@link test.myflix.R.attr#flingVelocity}
+          attribute's value can be found in the {@link #SlidingUpPanelLayout} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name test.myflix:flingVelocity
+        */
+        public static final int SlidingUpPanelLayout_flingVelocity = 4;
+        /**
+          <p>This symbol is the offset where the {@link test.myflix.R.attr#overlay}
+          attribute's value can be found in the {@link #SlidingUpPanelLayout} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name test.myflix:overlay
+        */
+        public static final int SlidingUpPanelLayout_overlay = 6;
+        /**
+          <p>This symbol is the offset where the {@link test.myflix.R.attr#panelHeight}
+          attribute's value can be found in the {@link #SlidingUpPanelLayout} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name test.myflix:panelHeight
+        */
+        public static final int SlidingUpPanelLayout_panelHeight = 0;
+        /**
+          <p>This symbol is the offset where the {@link test.myflix.R.attr#paralaxOffset}
+          attribute's value can be found in the {@link #SlidingUpPanelLayout} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name test.myflix:paralaxOffset
+        */
+        public static final int SlidingUpPanelLayout_paralaxOffset = 2;
+        /**
+          <p>This symbol is the offset where the {@link test.myflix.R.attr#shadowHeight}
+          attribute's value can be found in the {@link #SlidingUpPanelLayout} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name test.myflix:shadowHeight
+        */
+        public static final int SlidingUpPanelLayout_shadowHeight = 1;
+    };
 }

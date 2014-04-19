@@ -117,9 +117,10 @@ public class LoginActivity extends Activity {
 		mEmailView.setError(null);
 
 		// Store values at the time of the login attempt.
-		mEmail = mEmailView.getText().toString();
-		mPassword = mPasswordView.getText().toString();
-
+		//mEmail = mEmailView.getText().toString();
+		//mPassword = mPasswordView.getText().toString();
+		mEmail = "test@email.com";
+		mPassword = "password";
 		boolean cancel = false;
 		View focusView = null;
 

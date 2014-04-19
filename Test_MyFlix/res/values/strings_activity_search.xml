@@ -13,7 +13,7 @@
     <string name="search">Search</string>
     <string name="sort">Sort Results By</string>
     
-    <string-array name="genres_array">
+    <string name="keyword_hint">Keyword</string><string-array name="genres_array">
         <item>Action</item>
         <item>Comedy</item>
         <item>Drama</item>
@@ -34,5 +34,6 @@
         <item>111-130 mins</item>
         <item>131+ mins</item>
     </string-array>
+    
     
 </resources>

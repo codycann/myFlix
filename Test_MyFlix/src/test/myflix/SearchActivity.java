@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,9 +17,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.ListView;
-import android.view.Menu;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 
 public class SearchActivity extends Activity implements ListView.OnItemClickListener {
@@ -29,9 +32,12 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	private ListView mDrawerList;
     DatabaseQuery siteData;
 	EditText TitleView;
-	EditText GenreView;
+	Spinner GenreView;
 	EditText KeywordView;
 	EditText ActorView;
+	RadioGroup SortView;
+	RadioButton titleRadio;
+	RadioButton ratingsRadio;
 	Button search;
 	ArrayList<String> args = new ArrayList<String>();
 	String[] fieldName = {"Title", "Genre", "Actors", "Plot"};
@@ -46,7 +52,7 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.search_page);
+		setContentView(R.layout.activity_search);
 		adapter = new SearchAdapter(this, R.layout.search_result_row, movie_data);
         mDrawerList = (ListView) findViewById(R.id.right_drawer);
         mDrawerList.setAdapter(adapter);
@@ -59,21 +65,23 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
       		  String title = ((TextView) view.findViewById(R.id.textview_title)).getText().toString();
       		 Intent mIntent = new Intent(view.getContext(), InfoScreen.class);
       		 Bundle mBundle = new Bundle();
-      		 mBundle.putString("title", title);      		 mIntent.putExtras(mBundle);
+      		 mBundle.putString("title", title);      		
+      		 mIntent.putExtras(mBundle);
       		 view.getContext().startActivity(mIntent); 
       	  }
       	};
       	mDrawerList.setOnItemClickListener(listener);
-        TitleView = (EditText) findViewById(R.id.field_title);
-        GenreView = (EditText) findViewById(R.id.field_genre);
-        ActorView = (EditText) findViewById(R.id.field_actor);
-        KeywordView = (EditText) findViewById(R.id.field_keyword);
-        search = (Button) findViewById(R.id.button_search);
+        TitleView = (EditText) findViewById(R.id.title_field);
+        GenreView = (Spinner) findViewById(R.id.genre_field);
+        ActorView = (EditText) findViewById(R.id.actor_field);
+        KeywordView = (EditText) findViewById(R.id.keyword_field);
+        SortView = (RadioGroup) findViewById(R.id.radioGroup1);
+        search = (Button) findViewById(R.id.searchButton);
         search.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
             	if(search()){
             		adapter.refresh(movie_data);
-            		mDrawerLayout.openDrawer(Gravity.LEFT);
+            		mDrawerLayout.openDrawer(Gravity.RIGHT);
             	}
             }
         });
@@ -127,8 +135,8 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 		if(TitleView.getText().toString().length() != 0){
 			fields[0] = TitleView.getText().toString();
 		}
-		if(GenreView.getText().toString().length() != 0){
-			fields[1] = GenreView.getText().toString();
+		if(GenreView.getSelectedItem().toString().length() != 0){
+			fields[1] = GenreView.getSelectedItem().toString();
 		}
 		if(ActorView.getText().toString().length() != 0){
 			fields[2] = ActorView.getText().toString();

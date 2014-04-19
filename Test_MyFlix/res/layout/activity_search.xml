@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
+    sothree:overlay="true"
     sothree:panelHeight="68dp"
     sothree:shadowHeight="4dp">
 
@@ -85,9 +86,8 @@
 
     <ListView
         android:id="@+id/right_drawer"
-        android:layout_width="240dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="end"
         android:background="#111"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"

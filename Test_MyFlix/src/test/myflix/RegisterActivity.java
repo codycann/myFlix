@@ -34,10 +34,10 @@ public class RegisterActivity extends Activity {
 		setContentView(R.layout.activity_register);
 
 		// Set up the login form.
-		mEmailView = (EditText) findViewById(R.id.reg_email);
+		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(mEmail);
 
-		mPasswordView = (EditText) findViewById(R.id.reg_password);
+		mPasswordView = (EditText) findViewById(R.id.password);
 
 
 		findViewById(R.id.register_button).setOnClickListener(

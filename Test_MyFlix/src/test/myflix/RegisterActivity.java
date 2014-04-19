@@ -32,7 +32,6 @@ public class RegisterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_register);
-		query = new PostQuery(this, "Registering...");
 
 		// Set up the login form.
 		mEmailView = (EditText) findViewById(R.id.reg_email);
@@ -96,9 +95,27 @@ public class RegisterActivity extends Activity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			if (query.execute("SELECT * FROM login WHERE email = "+mEmail+"")==null){
+			query = new PostQuery(this, "Registering...");
+			query.execute("SELECT * FROM `login` WHERE `email` = \""+mEmail+"\"");
+			while(query.finished == false)
+			{
+		    	try { Thread.sleep(100); 
+		    		Log.v("mytag","still looping!");
+		    	}
+		    	catch (InterruptedException e) { e.printStackTrace(); }
+			}
+			if (query.getResult() == null) 
+			{
 				Log.v("mytag","email not present");
-				query.execute("INSERT INTO login (email, password) VALUES ('"+mEmail+"','"+mPassword+"')");
+				query = new PostQuery(this, "Registering...");
+				query.execute("INSERT INTO `login`(`email`, `password`) VALUES (\""+mEmail+"\", \""+mPassword+"\")");
+				while(query.finished == false)
+				{
+			    	try { Thread.sleep(100); 
+			    		Log.v("mytag","still looping!");
+			    	}
+			    	catch (InterruptedException e) { e.printStackTrace(); }
+				}
 				return true;
 			}
 			else{

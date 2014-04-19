@@ -155,7 +155,7 @@ public class LoginActivity extends Activity {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
 			query = new PostQuery(this, "Signing in...");
-			query.execute("SELECT * FROM login WHERE email = "+mEmail+" AND password = "+mPassword+"");
+			query.execute("SELECT * FROM `login` WHERE `email` = \""+mEmail+"\" AND `password` = \""+mPassword+"\"");
 			while(query.finished == false)
 			{
 		    	try { Thread.sleep(100); 

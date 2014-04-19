@@ -6,7 +6,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in_register"><b>Sign in</b></string>
-    <string name="action_register_link"><u>Register Here</u></string>
+    <string name="action_register_link"><u>New to myFlix? Register here</u></string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_forgot_password">Recover lost password</string>
     <string name="login_progress_signing_in">Signing in&#8230;</string>

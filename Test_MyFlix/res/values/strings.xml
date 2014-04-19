@@ -9,5 +9,33 @@
     <string name="action_collection">Movie Collection</string>
     <string name="action_video">Video Playback</string>
     <string name="title_activity_search">SearchActivity</string>
-
+<style name="buttonstyle">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textColor">#ffffff</item>
+    <item name="android:gravity">center</item>
+    <item name="layout_marginTop">20dp"</item>
+    <item name="android:textSize">30sp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:shadowColor">#000000</item>
+    <item name="android:shadowDx">1</item>
+    <item name="android:shadowDy">1</item>
+    <item name="android:shadowRadius">2</item>
+    <item android:state_pressed="true" >
+        <shape>
+            <solid
+                android:color="#ef4444" />
+            <stroke
+                android:width="1dp"
+                android:color="#992f2f" />
+            <corners
+                android:radius="3dp" />
+            <padding
+                android:left="10dp"
+                android:top="10dp"
+                android:right="10dp"
+                android:bottom="10dp" />
+        </shape>
+    </item>
+</style>
 </resources>

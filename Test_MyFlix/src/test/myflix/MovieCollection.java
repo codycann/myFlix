@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
+import android.app.ActionBar.OnNavigationListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,7 +16,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
-public class MovieCollection extends FragmentActivity implements ActionBar.OnNavigationListener{
+public class MovieCollection extends FragmentActivity implements OnNavigationListener{
 	 public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
 	 private ActionBar mActionBar;
 	 private ArrayAdapter<String> adapter;
@@ -28,14 +29,14 @@ public class MovieCollection extends FragmentActivity implements ActionBar.OnNav
 		super.onCreate(savedInstanceState);
 		mActionBar = this.getActionBar();
 		setContentView(R.layout.moviecollection);
+		genreList = new ArrayList<String>();
+		populateGenreList();
 		List<Fragment> fragments = getFragments();
 		
 		//mActionBar.setTitle(fragments.get(0).getArguments().getString(EXTRA_MESSAGE));
 		
 		mActionBar.setDisplayShowTitleEnabled(false);
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		genreList = new ArrayList<String>();
-		populateGenreList();
 		adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, android.R.id.text1, genreList);
 		mActionBar.setListNavigationCallbacks(adapter, this);
 		
@@ -76,16 +77,12 @@ public class MovieCollection extends FragmentActivity implements ActionBar.OnNav
 	  protected void onSaveInstanceState(Bundle outState) {
 		  super.onSaveInstanceState(outState);
 	  }
-	  @Override
-	  public boolean onNavigationItemSelected(int arg0, long arg1) {
-	  	// TODO Auto-generated method stub
-	  	return false;
-	  }
 private List<Fragment> getFragments(){
 	  List<Fragment> fList = new ArrayList<Fragment>();
 	  for(int i = 0; i < genreList.size(); i++){
 		  fList.add(GridFragment.newInstance(new String[] {"%"+genreList.get(i)+"%"},genreList.get(i),this));
 	  }
+	  //fList.add(GridFragment.newInstance(new String[] {"%Romance%"},"Romance", this));
 	  //add to list for every genre page
 	  return fList;
 }
@@ -99,5 +96,10 @@ private void populateGenreList(){
 	genreList.add("Romance");
 	genreList.add("Science Fiction");
 	genreList.add("War");
+}
+@Override
+public boolean onNavigationItemSelected(int arg0, long arg1) {
+	// TODO Auto-generated method stub
+	return false;
 }
 }

@@ -173,6 +173,10 @@ public class LoginActivity extends Activity {
 	}
 	private void onStartup(){
 		//checks for the last time the app was updated
+		if(true){
+			dataTask = new pullDatabase(this);
+			dataTask.execute("2000-01-01");
+		}
 		SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
 		Time now = new Time();
 		Time previous = new Time();

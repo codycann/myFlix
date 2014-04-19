@@ -12,10 +12,14 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 
-public class MovieCollection extends FragmentActivity {
+public class MovieCollection extends FragmentActivity implements ActionBar.OnNavigationListener{
 	 public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
-	private ActionBar mActionBar;
+	 private ActionBar mActionBar;
+	 private ArrayAdapter<String> adapter;
+	 private ArrayList<String> genreList;
 	  PageviewApapter pageAdapter;
 	  boolean dataPulled = false;
 	  pullDatabase dataTask;
@@ -23,10 +27,18 @@ public class MovieCollection extends FragmentActivity {
 	  public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mActionBar = this.getActionBar();
-		//onStartup();
 		setContentView(R.layout.moviecollection);
 		List<Fragment> fragments = getFragments();
-		mActionBar.setTitle(fragments.get(0).getArguments().getString(EXTRA_MESSAGE));
+		
+		//mActionBar.setTitle(fragments.get(0).getArguments().getString(EXTRA_MESSAGE));
+		
+		mActionBar.setDisplayShowTitleEnabled(false);
+		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		genreList = new ArrayList<String>();
+		populateGenreList();
+		adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, android.R.id.text1, genreList);
+		mActionBar.setListNavigationCallbacks(adapter, this);
+		
 		ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
 		pageAdapter = new PageviewApapter(getSupportFragmentManager(), fragments, this, pager);
 		pager.setPageTransformer(true, new PageTransformer());
@@ -64,20 +76,28 @@ public class MovieCollection extends FragmentActivity {
 	  protected void onSaveInstanceState(Bundle outState) {
 		  super.onSaveInstanceState(outState);
 	  }
+	  @Override
+	  public boolean onNavigationItemSelected(int arg0, long arg1) {
+	  	// TODO Auto-generated method stub
+	  	return false;
+	  }
 private List<Fragment> getFragments(){
 	  List<Fragment> fList = new ArrayList<Fragment>();
-	  fList.add(GridFragment.newInstance(new String[] {"%Action%"},"Action",this));
-	  fList.add(GridFragment.newInstance(new String[] {"%Adventure%"},"Adventure",this));
-	  fList.add(GridFragment.newInstance(new String[] {"%Comedy%"},"Comedy",this));
-	  fList.add(GridFragment.newInstance(new String[] {"%Crime%"},"Crime",this));
-	  fList.add(GridFragment.newInstance(new String[] {"%Drama%"},"Drama", this));
-	  fList.add(GridFragment.newInstance(new String[] {"%Honor%"},"Honor", this)); 
-	  fList.add(GridFragment.newInstance(new String[] {"%Romance%"},"Romance", this));
-	  fList.add(GridFragment.newInstance(new String[] {"%Science Fiction%"},"Science Fiction", this));
-	  fList.add(GridFragment.newInstance(new String[] {"%War%"},"War", this));
-
+	  for(int i = 0; i < genreList.size(); i++){
+		  fList.add(GridFragment.newInstance(new String[] {"%"+genreList.get(i)+"%"},genreList.get(i),this));
+	  }
 	  //add to list for every genre page
-
 	  return fList;
+}
+private void populateGenreList(){
+	genreList.add("Action");
+	genreList.add("Adventure");
+	genreList.add("Comedy");
+	genreList.add("Crime");
+	genreList.add("Drama");
+	genreList.add("Horror");
+	genreList.add("Romance");
+	genreList.add("Science Fiction");
+	genreList.add("War");
 }
 }

@@ -50,7 +50,12 @@ public class SearchAdapter extends ArrayAdapter<Movie>{
         
         Movie movie = data.get(position);
         holder.titleView.setText(movie.title);
-        holder.ratingView.setText(movie.rating);
+        String rating = movie.rating;
+        if(movie.rating == null)
+        {
+        	rating = "Ñ";
+        }
+        holder.ratingView.setText(rating);
         
         return row;
     }

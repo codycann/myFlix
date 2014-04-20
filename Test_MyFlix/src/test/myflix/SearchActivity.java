@@ -36,7 +36,6 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	ArrayList<String> titles;
 	ArrayList<Movie> movie_data = new ArrayList<Movie>();
 	ArrayList<String> ratings;
-	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private  SlidingUpPanelLayout slidingPanel;
     DatabaseQuery siteData;
@@ -105,7 +104,6 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
         mDrawerList.setAdapter(adapter);
 		mActionBar = this.getActionBar();
 		mActionBar.setTitle("Movie Search");
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         OnItemClickListener listener = new OnItemClickListener (){
       	  @Override
       	  public void onItemClick(AdapterView<?> parent, View view, int position, long id){

@@ -45,7 +45,7 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	EditText ActorView;
 	RadioGroup SortView;
 	RadioButton titleRadio;
-	RadioButton ratingsRadio;
+	RadioButton ratingRadio;
 	Button search;
 	ArrayList<String> args = new ArrayList<String>();
 	String[] fieldName = {"Title", "Genre", "Actors", "Plot"};
@@ -117,6 +117,8 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
       	};
       	mDrawerList.setOnItemClickListener(listener);
         TitleView = (EditText) findViewById(R.id.title_field);
+        titleRadio = (RadioButton) findViewById(R.id.title_radio);
+        ratingRadio = (RadioButton) findViewById(R.id.rating_radio);
         GenreView = (Spinner) findViewById(R.id.genre_field);
         ActorView = (EditText) findViewById(R.id.actor_field);
         KeywordView = (EditText) findViewById(R.id.keyword_field);
@@ -124,6 +126,7 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
         search = (Button) findViewById(R.id.searchButton);
         search.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+            	movie_data.clear();
             	if(search()){
             		adapter.refresh(movie_data);
             		slidingPanel.setSlidingEnabled(true);
@@ -149,10 +152,6 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
     			mIntent = new Intent(getApplicationContext(), SearchActivity.class);
 				startActivity(mIntent); 
     			return true;
-    		case R.id.action_collection:
-    			mIntent = new Intent(getApplicationContext(), MovieCollection.class);
-				startActivity(mIntent); 
-    			return true;
     		case R.id.action_video:
     			mIntent = new Intent(getApplicationContext(), VideoViewActivity.class);
 				startActivity(mIntent); 
@@ -165,11 +164,19 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	public boolean search(){
 		DatabaseQuery siteData = new DatabaseQuery(this);
 		popField();
+		String sortOption;
 		int size = populate();
 		if(size == 0) return false;
+		sortBy = "Title";
+		sortOption = " ASC";
+		if(!titleRadio.isChecked())
+		{
+			sortBy = "Rated";
+			sortOption = " DESC";
+		}
 		String[] passArgs = args.toArray(new String[args.size()]);
-		titles = siteData.getCol("Title", selection, passArgs, null, null, sortBy, "", "30");
-		ratings = siteData.getCol("imdbRating", selection, passArgs, null, null, sortBy, "","30");
+		titles = siteData.getCol("Title", selection, passArgs, null, null, sortBy, sortOption, "30");
+		ratings = siteData.getCol("imdbRating", selection, passArgs, null, null, sortBy, sortOption,"30");
 		for(int i = 0; i < titles.size(); i++){
 			movie_data.add(new Movie(titles.get(i), ratings.get(i)));
 		}
@@ -221,6 +228,7 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 		
 	}
     
+    //Not really needed but will keep here just in case
     @SuppressLint("NewApi")
     public void setActionBarTranslation(float y) 
     {

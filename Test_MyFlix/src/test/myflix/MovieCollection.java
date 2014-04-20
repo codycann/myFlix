@@ -21,6 +21,7 @@ public class MovieCollection extends FragmentActivity implements OnNavigationLis
 	 private ActionBar mActionBar;
 	 private ArrayAdapter<String> adapter;
 	 private ArrayList<String> genreList;
+	 private ViewPager pager;
 	  PageviewApapter pageAdapter;
 	  boolean dataPulled = false;
 	  pullDatabase dataTask;
@@ -41,10 +42,33 @@ public class MovieCollection extends FragmentActivity implements OnNavigationLis
 		adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_2, android.R.id.text1, genreList);
 		mActionBar.setListNavigationCallbacks(adapter, this);
 		
-		ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
+		pager = (ViewPager)findViewById(R.id.viewpager);
 		pageAdapter = new PageviewApapter(getSupportFragmentManager(), fragments, this, pager);
 		pager.setPageTransformer(true, new PageTransformer());
 		pager.setAdapter(pageAdapter);
+		
+		//Set Listener on ViewPager for action bar navigation
+		pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() 
+		{
+			
+			@Override
+			public void onPageSelected(int arg0) {
+				mActionBar.setSelectedNavigationItem(arg0);
+				
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	  }
 		@Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,8 +124,7 @@ private void populateGenreList(){
 }
 @Override
 public boolean onNavigationItemSelected(int arg0, long arg1) {
-	// TODO Auto-generated method stub
-	//
+	pager.setCurrentItem(arg0);
 	return false;
 }
 }

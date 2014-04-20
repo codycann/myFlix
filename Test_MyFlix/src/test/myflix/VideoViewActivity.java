@@ -51,6 +51,7 @@ public class VideoViewActivity extends Activity {
             try
             {
             	String title = extras.getString("title");
+            	title.replace(":", "()");
             	VideoURL = "http://cannonmovies.us/myflix/"+ title + ".mp4";
             	//VideoURL = "http://cannonmovies.us/myflix/2012.mp4";
             	VideoURL = VideoURL.replace(" ","%20");

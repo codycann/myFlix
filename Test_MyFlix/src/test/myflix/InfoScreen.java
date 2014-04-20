@@ -109,6 +109,7 @@ public class InfoScreen extends Activity {
 		
 		playbutton = (Button) findViewById(R.id.play_button);
 		playbutton.setWidth(picture.getLayoutParams().width);
+		playbutton.setOnClickListener(new playListener(title));
         
     }
 	@Override

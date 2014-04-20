@@ -39,7 +39,7 @@ public class MovieCollection extends FragmentActivity implements OnNavigationLis
 		
 		mActionBar.setDisplayShowTitleEnabled(false);
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_2, android.R.id.text1, genreList);
+		adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.search_result_list_item, R.id.result_item, genreList);
 		mActionBar.setListNavigationCallbacks(adapter, this);
 		
 		pager = (ViewPager)findViewById(R.id.viewpager);

@@ -171,7 +171,7 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 		sortOption = " ASC";
 		if(!titleRadio.isChecked())
 		{
-			sortBy = "Rated";
+			sortBy = "imdbRating";
 			sortOption = " DESC";
 		}
 		String[] passArgs = args.toArray(new String[args.size()]);

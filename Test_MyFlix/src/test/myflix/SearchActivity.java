@@ -194,7 +194,7 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 			sortBy = "imdbRating";
 			sortOption = " DESC";
 		}
-		if(args == null){
+		if(args.get(0) == ""){
 			titles = siteData.getCol("Title", selection, null, null, null, sortBy, sortOption, "40");
 			ratings = siteData.getCol("imdbRating", selection, null, null, null, sortBy, sortOption,"40");
 		}
@@ -234,7 +234,9 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	}
 	private int populate(){
 		int size = 0;
-		args.clear();
+		if(!args.isEmpty()){
+			args.clear();
+		}
 		selection = "";
 		for(int i = 0; i < numFields; i++){
 			if(fields[i] != ""){
@@ -245,7 +247,7 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 			}
 		}
 		if(args.size() == 0){
-			args = null;
+			args.add("");
 		}
 		return size;
 	}

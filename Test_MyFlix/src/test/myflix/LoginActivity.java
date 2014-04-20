@@ -85,12 +85,12 @@ public class LoginActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent mIntent;
     	switch (item.getItemId()) {
+			case android.R.id.home:
+				mIntent = new Intent(getApplicationContext(), MovieCollection.class);
+				startActivity(mIntent); 
+				return true;
     		case R.id.action_search:
     			mIntent = new Intent(getApplicationContext(), SearchActivity.class);
-				startActivity(mIntent); 
-    			return true;
-    		case R.id.action_collection:
-    			mIntent = new Intent(getApplicationContext(), MovieCollection.class);
 				startActivity(mIntent); 
     			return true;
     		case R.id.action_video:

@@ -57,7 +57,8 @@ public class InfoScreen extends Activity {
 		display.getSize(size);
 		width = size.x;
 		height = size.y;
-        mActionBar = this.getActionBar();
+        mActionBar = getActionBar();
+        mActionBar.setHomeButtonEnabled(true);
         ArrayList<String> titlelist = new ArrayList<String>();
         image = new ImageStorage(getApplicationContext());
         data = new DatabaseQuery(getApplicationContext());
@@ -122,12 +123,12 @@ public class InfoScreen extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent mIntent;
     	switch (item.getItemId()) {
+			case android.R.id.home:
+				mIntent = new Intent(getApplicationContext(), MovieCollection.class);
+				startActivity(mIntent); 
+				return true;
     		case R.id.action_search:
     			mIntent = new Intent(getApplicationContext(), SearchActivity.class);
-				startActivity(mIntent); 
-    			return true;
-    		case R.id.action_collection:
-    			mIntent = new Intent(getApplicationContext(), MovieCollection.class);
 				startActivity(mIntent); 
     			return true;
     		case R.id.action_video:

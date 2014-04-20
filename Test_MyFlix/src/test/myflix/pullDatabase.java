@@ -21,7 +21,6 @@ public class pullDatabase extends AsyncTask<String, Void, Boolean>
 	        public pullDatabase(Context context) {
 	            this.context = context;
 	            siteData = new DatabaseQuery(context);
-	            siteData.deleteAll();
 	        }
 	        @Override
 	        protected void onPreExecute() {
@@ -33,6 +32,7 @@ public class pullDatabase extends AsyncTask<String, Void, Boolean>
 	            // TODO Auto-generated method stub
 	            try {
 	            	//json = siteQuery.newQuery("SELECT * from movies WHERE date_added > "+ date[0]);
+		            siteData.deleteAll();
 	            	json = siteQuery.newQuery("SELECT * from movies");
             		JSONObject json_data = null;
             		if(json != null){

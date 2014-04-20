@@ -28,6 +28,7 @@ public class MovieCollection extends FragmentActivity implements OnNavigationLis
 	  public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mActionBar = this.getActionBar();
+		mActionBar.setHomeButtonEnabled(true);
 		setContentView(R.layout.moviecollection);
 		genreList = new ArrayList<String>();
 		populateGenreList();
@@ -57,12 +58,12 @@ public class MovieCollection extends FragmentActivity implements OnNavigationLis
 		public boolean onOptionsItemSelected(MenuItem item) {
 			Intent mIntent;
 	    	switch (item.getItemId()) {
-	    		case R.id.action_search:
-	    			mIntent = new Intent(getApplicationContext(), SearchActivity.class);
+	    		case android.R.id.home:
+	    			mIntent = new Intent(getApplicationContext(), MovieCollection.class);
 					startActivity(mIntent); 
 	    			return true;
-	    		case R.id.action_collection:
-	    			mIntent = new Intent(getApplicationContext(), MovieCollection.class);
+	    		case R.id.action_search:
+	    			mIntent = new Intent(getApplicationContext(), SearchActivity.class);
 					startActivity(mIntent); 
 	    			return true;
 	    		case R.id.action_video:

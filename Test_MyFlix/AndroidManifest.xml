@@ -21,9 +21,8 @@
         android:theme="@style/AppTheme" >
         <activity
   			android:name="test.myflix.LoginActivity"
-            android:label="@string/title_activity_login"
             android:theme="@android:style/Theme.Black.NoTitleBar"
-            android:windowSoftInputMode="adjustResize|stateVisible">            
+            android:windowSoftInputMode="adjustResize|stateHidden|adjustPan">            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +41,8 @@
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
         <activity
             android:name="test.myflix.SearchActivity"
-            android:label="@string/title_activity_search" >
+            android:label="@string/title_activity_search"
+            android:windowSoftInputMode="stateHidden|adjustPan" >
         </activity>
         <activity
             android:name="test.myflix.RegisterActivity"

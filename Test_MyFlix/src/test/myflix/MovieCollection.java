@@ -37,7 +37,7 @@ public class MovieCollection extends FragmentActivity implements OnNavigationLis
 		
 		mActionBar.setDisplayShowTitleEnabled(false);
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, android.R.id.text1, genreList);
+		adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_2, android.R.id.text1, genreList);
 		mActionBar.setListNavigationCallbacks(adapter, this);
 		
 		ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
@@ -47,7 +47,7 @@ public class MovieCollection extends FragmentActivity implements OnNavigationLis
 	  }
 		@Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
-	        MenuInflater inflater = getMenuInflater();
+	        MenuInflater inflater = getMenuInflater( );
 	        inflater.inflate(R.menu.activity_main_actions, menu);
 		    MenuItem item= menu.findItem(R.id.action_video);
 		    item.setEnabled(false);
@@ -100,6 +100,7 @@ private void populateGenreList(){
 @Override
 public boolean onNavigationItemSelected(int arg0, long arg1) {
 	// TODO Auto-generated method stub
+	//
 	return false;
 }
 }

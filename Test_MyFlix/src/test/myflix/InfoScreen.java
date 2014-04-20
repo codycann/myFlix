@@ -6,15 +6,20 @@ import java.util.ArrayList;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ImageView.ScaleType;
 
 public class InfoScreen extends Activity {
 
@@ -30,21 +35,28 @@ public class InfoScreen extends Activity {
     TextView imdb;
     TextView rating;
     TextView runtime;
-    TextView year;
     TextView actors;
     TextView director;
     TextView awards;
     TextView genres;
     TextView writer;
-    ScaleableTextView description;
+    TextView plot;
     Button playbutton;
     Button addbutton;
     ActionBar mActionBar;
+    double height;
+    double width;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_screen);
+		WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();		
+		Point size = new Point();
+		display.getSize(size);
+		width = size.x;
+		height = size.y;
         mActionBar = this.getActionBar();
         ArrayList<String> titlelist = new ArrayList<String>();
         image = new ImageStorage(getApplicationContext());
@@ -57,41 +69,45 @@ public class InfoScreen extends Activity {
         poster = posterStorage.get(0);
         datalist = data.byTitle(title);
         
-    	description = (ScaleableTextView) findViewById(R.id.description);
-		description.setText(datalist.get(6));
 		
-		movietitle = (TextView) findViewById(R.id.movie_title);
-		movietitle.setText(datalist.get(1));
+		movietitle = (TextView) findViewById(R.id.title);
+		movietitle.setText(datalist.get(3)+" ("+datalist.get(4)+")"); //title (year)
 		
-		imdb = (TextView) findViewById(R.id.imdb_rating);
-		imdb.setText(datalist.get(7));
+		imdb = (TextView) findViewById(R.id.imdb);
+		imdb.setText("IMDB Rating: "+datalist.get(9));
 		
-		rating = (TextView) findViewById(R.id.rating);
-		rating.setText(datalist.get(3));
+		rating = (TextView) findViewById(R.id.rated);
+		rating.setText(datalist.get(5));
 		
 		runtime = (TextView) findViewById(R.id.runtime);
-		runtime.setText(datalist.get(4));
+		runtime.setText(datalist.get(6));
 		
-		year = (TextView) findViewById(R.id.year);
-		year.setText(datalist.get(2));
-		
-		actors = (TextView) findViewById(R.id.actors);
-		actors.setText(datalist.get(11));
+		actors = (TextView) findViewById(R.id.actor);
+		actors.setText("Stars: "+datalist.get(13));
 		
 		director = (TextView) findViewById(R.id.director);
-		director.setText(datalist.get(9));
+		director.setText("Director: "+datalist.get(11));
 		
 		awards = (TextView) findViewById(R.id.awards);
-		awards.setText(datalist.get(5));
+		awards.setText("Awards: "+datalist.get(7));
 		
 		genres = (TextView) findViewById(R.id.genre);
-		genres.setText(datalist.get(8));
+		genres.setText(datalist.get(10));
 		
 		writer = (TextView) findViewById(R.id.writer);
-		writer.setText(datalist.get(10));
+		writer.setText("Writer(s): "+datalist.get(12));
 		
-		picture = (ImageView) findViewById(R.id.movie_poster);
+		plot = (TextView) findViewById(R.id.plot);
+		plot.setText(datalist.get(8));
+		
+		picture = (ImageView) findViewById(R.id.poster);
+		picture.getLayoutParams().height = (int) (height/(2.6));
+		picture.getLayoutParams().width = (int) (width/(2.3));
+		picture.setScaleType(ScaleType.FIT_XY);
 		picture.setImageBitmap(poster);
+		
+		playbutton = (Button) findViewById(R.id.play_button);
+		playbutton.setWidth(picture.getLayoutParams().width);
         
     }
 	@Override

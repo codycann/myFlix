@@ -117,10 +117,12 @@ private void populateGenreList(){
 	genreList.add("Comedy");
 	genreList.add("Crime");
 	genreList.add("Drama");
-	genreList.add("Horror");
+	genreList.add("Family");
+	genreList.add("Fantasy");
+	genreList.add("Mystery");
 	genreList.add("Romance");
-	genreList.add("Science Fiction");
-	genreList.add("War");
+	genreList.add("Sci-Fi");
+	genreList.add("Thriller");
 }
 @Override
 public boolean onNavigationItemSelected(int arg0, long arg1) {

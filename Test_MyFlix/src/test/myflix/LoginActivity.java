@@ -173,7 +173,7 @@ public class LoginActivity extends Activity {
 	}
 	private void onStartup(){
 		//checks for the last time the app was updated
-		if(true){
+		if(false){
 			dataTask = new pullDatabase(this);
 			dataTask.execute("2000-01-01");
 		}

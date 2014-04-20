@@ -16,12 +16,16 @@ public class SearchAdapter extends ArrayAdapter<Movie>{
     Context context; 
     int layoutResourceId;    
     ArrayList<Movie> data = new ArrayList<Movie>();
+    double width;
+    double height;
     
-    public SearchAdapter(Context context, int layoutResourceId, ArrayList<Movie> data) {
+    public SearchAdapter(Context context, int layoutResourceId, ArrayList<Movie> data, double width, double height) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
+        this.width = width;
+        this.height = height;
     }
     public void refresh(ArrayList<Movie> list) {  
         data = list;  
@@ -39,7 +43,9 @@ public class SearchAdapter extends ArrayAdapter<Movie>{
             
             holder = new MovieHolder();
             holder.titleView = (TextView)row.findViewById(R.id.textview_title);
+            holder.titleView.setMaxWidth((int) (width*0.8));
             holder.ratingView = (TextView)row.findViewById(R.id.textview_rating);
+            holder.ratingView.setMaxWidth((int) (width*0.2));
             
             row.setTag(holder);
         }

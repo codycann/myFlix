@@ -14,10 +14,17 @@
     <string name="sort">Sort Results By</string>
     
     <string name="keyword_hint">Keyword</string><string-array name="genres_array">
+        <item>Select Genre</item>
         <item>Action</item>
+        <item>Adventure</item>
         <item>Comedy</item>
+        <item>Crime</item>
         <item>Drama</item>
-        <item>Horror</item>
+        <item>Family</item>
+        <item>Fantasy</item>
+        <item>Mystery</item>
+        <item>Romance</item>
+        <item>Sci-Fi</item>
         <item>Thriller</item>
     </string-array>
     

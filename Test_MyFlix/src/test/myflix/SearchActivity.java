@@ -5,18 +5,22 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -24,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -56,14 +61,23 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	String selection = "";
 	ActionBar mActionBar;
 	SearchAdapter adapter;
+	double width;
+	double height;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
-		adapter = new SearchAdapter(this, R.layout.search_result_row, movie_data);
+        //Get Screen dimensions
+		WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();		
+		Point size = new Point();
+		display.getSize(size);
+		width = size.x;
+		height = size.y;
+		adapter = new SearchAdapter(this, R.layout.search_result_row, movie_data, width, height);
         mDrawerList = (ListView) findViewById(R.id.right_drawer);
-        
+ 
         //Set sliding panel and listener
         slidingPanel = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         slidingPanel.setSlidingEnabled(false);
@@ -103,6 +117,7 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
         });
         mDrawerList.setAdapter(adapter);
 		mActionBar = this.getActionBar();
+		mActionBar.setHomeButtonEnabled(true);
 		mActionBar.setTitle("Movie Search");
         OnItemClickListener listener = new OnItemClickListener (){
       	  @Override
@@ -148,6 +163,10 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent mIntent;
     	switch (item.getItemId()) {
+			case android.R.id.home:
+				mIntent = new Intent(getApplicationContext(), MovieCollection.class);
+				startActivity(mIntent); 
+				return true;
     		case R.id.action_search:
     			mIntent = new Intent(getApplicationContext(), SearchActivity.class);
 				startActivity(mIntent); 
@@ -162,11 +181,12 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
     }
     
 	public boolean search(){
+		String passSelection = null;
 		DatabaseQuery siteData = new DatabaseQuery(this);
 		popField();
 		String sortOption;
 		int size = populate();
-		if(size == 0) return false;
+		//if(size == 0) return false;
 		sortBy = "Title";
 		sortOption = " ASC";
 		if(!titleRadio.isChecked())
@@ -174,9 +194,15 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 			sortBy = "imdbRating";
 			sortOption = " DESC";
 		}
-		String[] passArgs = args.toArray(new String[args.size()]);
-		titles = siteData.getCol("Title", selection, passArgs, null, null, sortBy, sortOption, "30");
-		ratings = siteData.getCol("imdbRating", selection, passArgs, null, null, sortBy, sortOption,"30");
+		if(args == null){
+			titles = siteData.getCol("Title", selection, null, null, null, sortBy, sortOption, "40");
+			ratings = siteData.getCol("imdbRating", selection, null, null, null, sortBy, sortOption,"40");
+		}
+		else {
+			String[] passArgs = args.toArray(new String[args.size()]);
+			titles = siteData.getCol("Title", selection, passArgs, null, null, sortBy, sortOption, "40");
+			ratings = siteData.getCol("imdbRating", selection, passArgs, null, null, sortBy, sortOption,"40");
+		}
 		for(int i = 0; i < titles.size(); i++){
 			movie_data.add(new Movie(titles.get(i), ratings.get(i)));
 		}
@@ -185,11 +211,15 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 	}
 	private void popField(){
 		fields = reset.clone();
+		String genre;
 		if(TitleView.getText().toString().length() != 0){
 			fields[0] = TitleView.getText().toString();
 		}
 		if(GenreView.getSelectedItem().toString().length() != 0){
-			fields[1] = GenreView.getSelectedItem().toString();
+			genre = GenreView.getSelectedItem().toString();
+			if(!genre.contentEquals("Select Genre")){
+				fields[1] = GenreView.getSelectedItem().toString();
+			}
 		}
 		if(ActorView.getText().toString().length() != 0){
 			fields[2] = ActorView.getText().toString();
@@ -213,6 +243,9 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
 				args.add("%"+fields[i]+"%");
 				size++;
 			}
+		}
+		if(args.size() == 0){
+			args = null;
 		}
 		return size;
 	}

@@ -144,9 +144,11 @@ public class InfoScreen extends Activity {
     			mIntent = new Intent(getApplicationContext(), VideoViewActivity.class);
     			SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
     			String movie = prefs.getString("movie", "2012");
+    			int position = prefs.getInt("position", 0);
+    			Log.v("position", ""+position);
     			Bundle mBundle = new Bundle();
 				mBundle.putString("title", movie);
-				Log.v("listener", title);
+				mBundle.putInt("position", position);
     			mIntent.putExtras(mBundle);
 				startActivity(mIntent); 
     			return true;

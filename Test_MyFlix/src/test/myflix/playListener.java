@@ -17,6 +17,7 @@ public class playListener implements OnClickListener{
 		 Intent mIntent = new Intent(v.getContext(), VideoViewActivity.class);
 		 Bundle mBundle = new Bundle();
 		 mBundle.putString("title", title);
+		 mBundle.putInt("position", 0);
 		 Log.v("listener", title);
 		 mIntent.putExtras(mBundle);
 		 v.getContext().startActivity(mIntent); 

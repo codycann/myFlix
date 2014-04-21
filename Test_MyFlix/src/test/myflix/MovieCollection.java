@@ -6,12 +6,15 @@ import java.util.List;
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
 import android.support.v4.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -109,26 +112,40 @@ public class MovieCollection extends FragmentActivity implements OnNavigationLis
 	  }
 		@Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
-	        MenuInflater inflater = getMenuInflater( );
+	        MenuInflater inflater = getMenuInflater();
 	        inflater.inflate(R.menu.activity_main_actions, menu);
+			SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
 		    MenuItem item= menu.findItem(R.id.action_video);
-		    item.setEnabled(false);
+			if(!prefs.contains("movie")){
+			    item.setEnabled(false);
+			}
+			else{
+				item.setEnabled(true);
+			}
 	        return super.onCreateOptionsMenu(menu);
 	    }
 	    @Override
 		public boolean onOptionsItemSelected(MenuItem item) {
 			Intent mIntent;
 	    	switch (item.getItemId()) {
-	    		case android.R.id.home:
-	    			mIntent = new Intent(getApplicationContext(), MovieCollection.class);
+				case android.R.id.home:
+					mIntent = new Intent(getApplicationContext(), MovieCollection.class);
 					startActivity(mIntent); 
-	    			return true;
+					return true;
 	    		case R.id.action_search:
 	    			mIntent = new Intent(getApplicationContext(), SearchActivity.class);
 					startActivity(mIntent); 
 	    			return true;
 	    		case R.id.action_video:
 	    			mIntent = new Intent(getApplicationContext(), VideoViewActivity.class);
+	    			SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
+	    			String movie = prefs.getString("movie", "2012");
+	    			int position = prefs.getInt("position", 0);
+	    			Log.v("position", ""+position);
+	    			Bundle mBundle = new Bundle();
+					mBundle.putString("title", movie);
+					mBundle.putInt("position", position);
+	    			mIntent.putExtras(mBundle);
 					startActivity(mIntent); 
 	    			return true;
 	    		default:

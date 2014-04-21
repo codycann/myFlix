@@ -56,6 +56,7 @@ public class VideoViewActivity extends Activity {
         		SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
         		prefs.edit().putString("movie", title).commit();
             	String videoTitle = title.replace(":", "()");
+            	playbackPosition = extras.getInt("position");
             	VideoURL = "http://cannonmovies.us/myflix/"+ videoTitle + ".mp4";
             	//VideoURL = "http://cannonmovies.us/myflix/2012.mp4";
             	VideoURL = VideoURL.replace(" ","%20");
@@ -68,17 +69,6 @@ public class VideoViewActivity extends Activity {
             	VideoURL = "http://cannonmovies.us/myflix/5%20Days%20of%20War.mp4";
             	MovieName = "Default Movie";
             }
-            
-            try
-            {
-            	playbackPosition = extras.getInt("Position");
-            }
-            catch(Exception e)
-            {
-            	Log.e("Bundle Retrieval Exception", "Missing Position");
-            	playbackPosition = 0;
-            }
-           
         }
       
         // Create a progressbar
@@ -111,6 +101,7 @@ public class VideoViewActivity extends Activity {
             public void onPrepared(MediaPlayer mp) {
                 pDialog.dismiss();
                 videoview.start();
+                videoview.seekTo(playbackPosition);
             }
         });
         
@@ -130,6 +121,8 @@ public class VideoViewActivity extends Activity {
         //Pause video playback and save location
         videoview.pause();
         playbackPosition = videoview.getCurrentPosition();
+		SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
+		prefs.edit().putInt("position", playbackPosition).commit();
         
     }
     
@@ -150,6 +143,8 @@ public class VideoViewActivity extends Activity {
         savedInstanceState.putInt(PLAYBACK_POSITION, playbackPosition);
         savedInstanceState.putString(VIDEO_URL, VideoURL);
         savedInstanceState.putString(MOVIE_NAME, MovieName);
+		SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
+		prefs.edit().putInt("position", playbackPosition).commit();
         
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);

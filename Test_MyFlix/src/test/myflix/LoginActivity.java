@@ -32,12 +32,17 @@ public class LoginActivity extends Activity{
 	private EditText mEmailView;
 	private EditText mPasswordView;
 	private TextView mLoginStatusMessageView;
+	SharedPreferences prefs;
 	
 	pullDatabase dataTask;
 	PostQuery query;
 	ActionBar mActionBar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
+		mEmail = prefs.getString("email", "");
+		mPassword = prefs.getString("password", "");
+		
 		super.onCreate(savedInstanceState);
 		dataTask = new pullDatabase(this);
 
@@ -51,6 +56,7 @@ public class LoginActivity extends Activity{
 		mEmailView.setText(mEmail);
 
 		mPasswordView = (EditText) findViewById(R.id.password);
+		//mPasswordView.setText(mPassword);
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
@@ -58,13 +64,14 @@ public class LoginActivity extends Activity{
 					public void onClick(View view) {
 						view.setClickable(false);
 						if(attemptLogin()){
+							prefs.edit().putString("email", mEmail).commit();
+							prefs.edit().putString("password", mPassword).commit();
 							Intent mIntent = new Intent(getApplicationContext(), MovieCollection.class);
 							startActivity(mIntent); 
 						}
 						view.setClickable(true);
 					}
 				});
-		
 		findViewById(R.id.register_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -115,10 +122,8 @@ public class LoginActivity extends Activity{
 		mEmailView.setError(null);
 
 		// Store values at the time of the login attempt.
-		//mEmail = mEmailView.getText().toString();
-		//mPassword = mPasswordView.getText().toString();
-		mEmail = "test@email.com";
-		mPassword = "password";
+		mEmail = mEmailView.getText().toString();
+		mPassword = mPasswordView.getText().toString();
 		boolean cancel = false;
 		View focusView = null;
 
@@ -171,10 +176,6 @@ public class LoginActivity extends Activity{
 	}
 	private void onStartup(){
 		//checks for the last time the app was updated
-		if(false){
-			dataTask = new pullDatabase(this);
-			dataTask.execute("2000-01-01");
-		}
 		SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
 		Time now = new Time();
 		Time previous = new Time();

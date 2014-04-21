@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
@@ -155,8 +156,14 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_main_actions, menu);
+		SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
 	    MenuItem item= menu.findItem(R.id.action_video);
-	    item.setEnabled(false);
+		if(!prefs.contains("movie")){
+		    item.setEnabled(false);
+		}
+		else{
+			item.setEnabled(true);
+		}
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -173,6 +180,14 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
     			return true;
     		case R.id.action_video:
     			mIntent = new Intent(getApplicationContext(), VideoViewActivity.class);
+    			SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
+    			String movie = prefs.getString("movie", "2012");
+    			int position = prefs.getInt("position", 0);
+    			Log.v("position", ""+position);
+    			Bundle mBundle = new Bundle();
+				mBundle.putString("title", movie);
+				mBundle.putInt("position", position);
+    			mIntent.putExtras(mBundle);
 				startActivity(mIntent); 
     			return true;
     		default:
@@ -181,7 +196,6 @@ public class SearchActivity extends Activity implements ListView.OnItemClickList
     }
     
 	public boolean search(){
-		String passSelection = null;
 		DatabaseQuery siteData = new DatabaseQuery(this);
 		popField();
 		String sortOption;

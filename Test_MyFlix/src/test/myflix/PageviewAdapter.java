@@ -5,11 +5,12 @@ import java.util.List;
 import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
 
 class PageviewApapter extends FragmentStatePagerAdapter implements ViewPager.OnPageChangeListener {
 
@@ -17,12 +18,14 @@ class PageviewApapter extends FragmentStatePagerAdapter implements ViewPager.OnP
 	  private List<Fragment> fragments;
 	  private final Context mContext;
 	  private final ActionBar mActionBar;
+	  FragmentManager mFragmentManager;
 	  private final ViewPager mViewPager;
 
 	  public PageviewApapter(FragmentManager fm, List<Fragment> fragments, FragmentActivity activity, ViewPager pager) {
 	    super(fm);
 	    mViewPager = pager;
 	    mContext = activity;
+	    mFragmentManager = fm;
 	    mActionBar = activity.getActionBar();
 	    mViewPager.setOnPageChangeListener(this);
 	    this.fragments = fragments;
@@ -42,6 +45,12 @@ class PageviewApapter extends FragmentStatePagerAdapter implements ViewPager.OnP
 	  }
 	  public void onActivityCreated (Bundle savedInstanceState){
 	    	
+	  }
+	  @Override
+	  public void finishUpdate(ViewGroup container) 
+	  {
+		  super.finishUpdate(container);
+		  mFragmentManager.executePendingTransactions();
 	  }
 
 	@Override

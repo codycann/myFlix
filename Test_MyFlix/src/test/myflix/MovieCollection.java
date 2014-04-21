@@ -5,8 +5,10 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -14,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 
 public class MovieCollection extends FragmentActivity implements OnNavigationListener{
 	 public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
@@ -46,29 +47,65 @@ public class MovieCollection extends FragmentActivity implements OnNavigationLis
 		pageAdapter = new PageviewApapter(getSupportFragmentManager(), fragments, this, pager);
 		pager.setPageTransformer(true, new PageTransformer());
 		pager.setAdapter(pageAdapter);
-		
 		//Set Listener on ViewPager for action bar navigation
 		pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() 
 		{
+			int positionCurrent;
+            boolean dontLoadList;
+            
 			
 			@Override
-			public void onPageSelected(int arg0) {
-				mActionBar.setSelectedNavigationItem(arg0);
+			public void onPageSelected(int position) {
+				mActionBar.setSelectedNavigationItem(position);
+				final int pos = position;
+				new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        {
+                        	FragmentTransaction fragmentTrans = getSupportFragmentManager().beginTransaction();
+            				Fragment fg = pageAdapter.getItem(pos);
+            				fragmentTrans.detach(fg);
+            				fragmentTrans.attach(fg);
+            				fragmentTrans.commit();
+                        }
+                    }
+                },200);
+				
 				
 			}
 			
 			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// TODO Auto-generated method stub
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) 
+			{
+				positionCurrent = position; 
+                if( positionOffset == 0 && positionOffsetPixels == 0 )
+                {
+                	// the offset is zero when the swiping ends
+                    dontLoadList = false;
+                }
+	
+                else
+                {
+                    dontLoadList = true; // To avoid loading content for list after swiping the pager.
+                }
 				
 			}
 			
 			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void onPageScrollStateChanged(int state) 
+			{
+				if(state == 0){ 
+					// the viewpager is idle as swipping ended
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
+                            if(!dontLoadList){
+                            //async thread code to execute loading the list... 
+                            }
+                        }
+                    },200);
+                }
+            }
 		});
+		
 	  }
 		@Override
 	    public boolean onCreateOptionsMenu(Menu menu) {

@@ -22,7 +22,7 @@ import android.widget.TextView;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity{
 
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
@@ -36,15 +36,15 @@ public class LoginActivity extends Activity {
 	pullDatabase dataTask;
 	PostQuery query;
 	ActionBar mActionBar;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		dataTask = new pullDatabase(this);
 
 		setContentView(R.layout.activity_login);
 		
+		//In case activity was recreated from bundle and button clicks were turned off.
+		findViewById(R.id.sign_in_button).setClickable(true);
 		
 		// Set up the login form.
 		mEmailView = (EditText) findViewById(R.id.email);
@@ -56,10 +56,12 @@ public class LoginActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+						view.setClickable(false);
 						if(attemptLogin()){
 							Intent mIntent = new Intent(getApplicationContext(), MovieCollection.class);
 							startActivity(mIntent); 
 						}
+						view.setClickable(true);
 					}
 				});
 		
@@ -71,6 +73,7 @@ public class LoginActivity extends Activity {
 						startActivity(mIntent); 
 					}
 				}); 
+		onStartup();
 	}
 
 	@Override
@@ -100,11 +103,6 @@ public class LoginActivity extends Activity {
     		default:
     			return true;
     		}
-    }
-    @Override
-    protected void onPostCreate (Bundle savedInstanceState){
-    	super.onPostCreate(savedInstanceState);
-    	onStartup();
     }
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
@@ -184,26 +182,26 @@ public class LoginActivity extends Activity {
 		previous.parse3339(lastUpdate);
 		now.setToNow();
 		now.parse3339(now.format3339(true));
-		prefs.edit().putString("pullDate", now.format3339(true)).commit();
+		final ProgressDialog pDialog = new ProgressDialog(this);
+		//extra whitespace to center in progress dialog
+		pDialog.setTitle("          MyFlix          ");
+	    pDialog.setMessage("Loading ...");
+	    pDialog.setIndeterminate(false);
+	    pDialog.setCancelable(false);
 		if (now.after(previous)){
+			prefs.edit().putString("pullDate", now.format3339(true)).commit();
 			dataTask = new pullDatabase(this);
-			/*ProgressDialog pDialog = new ProgressDialog(getApplicationContext());
-	        pDialog.setTitle("New Content");
-            pDialog.setMessage("Updating ...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show(); 
-            */
+			
+			pDialog.show(); 
+            dataTask.setListener(new pullDatabase.pullDatabaseListener() {
+				
+				@Override
+				public void onPullFinished() {
+					pDialog.dismiss();
+					
+				}
+            });
 			dataTask.execute(lastUpdate);
-			while (dataTask.done == false) { //Loops at .1 sec intervals until AsyncTask has finished  
-				try { Thread.sleep(100); 
-			    	Log.v("mytag","still looping!");
-			    	
-			    }
-			    catch (InterruptedException e) { e.printStackTrace(); }
-			}
-			//pDialog.dismiss();
-			Log.v("mytag","made it out of the loop!");
 		}
 	}
 }

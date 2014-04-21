@@ -1,7 +1,9 @@
 package test.myflix;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,7 +21,6 @@ public class RegisterActivity extends Activity {
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mPassword;
-
 	// UI references.
 	private EditText mEmailView;
 	private EditText mPasswordView;
@@ -30,7 +31,6 @@ public class RegisterActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_register);
 
 		// Set up the login form.
@@ -46,6 +46,9 @@ public class RegisterActivity extends Activity {
 					public void onClick(View view) {
 						if(attemptRegister()){
 							Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_SHORT).show();
+							SharedPreferences prefs = getApplicationContext().getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
+							prefs.edit().putString("email", mEmail).commit();
+							prefs.edit().putString("password", mPassword).commit();
 							Intent mIntent = new Intent(getApplicationContext(), LoginActivity.class);
 							startActivity(mIntent); 
 						}

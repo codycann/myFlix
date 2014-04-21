@@ -56,7 +56,7 @@ public class LoginActivity extends Activity{
 		mEmailView.setText(mEmail);
 
 		mPasswordView = (EditText) findViewById(R.id.password);
-		//mPasswordView.setText(mPassword);
+		mPasswordView.setText(mPassword);
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {

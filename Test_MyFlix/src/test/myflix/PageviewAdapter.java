@@ -46,12 +46,6 @@ class PageviewApapter extends FragmentStatePagerAdapter implements ViewPager.OnP
 	  public void onActivityCreated (Bundle savedInstanceState){
 	    	
 	  }
-	  @Override
-	  public void finishUpdate(ViewGroup container) 
-	  {
-		  super.finishUpdate(container);
-		  mFragmentManager.executePendingTransactions();
-	  }
 
 	@Override
 	public void onPageScrollStateChanged(int arg0) {

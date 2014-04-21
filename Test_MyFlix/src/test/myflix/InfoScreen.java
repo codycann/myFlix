@@ -8,8 +8,10 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -116,8 +118,14 @@ public class InfoScreen extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_main_actions, menu);
+		SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
 	    MenuItem item= menu.findItem(R.id.action_video);
-	    item.setEnabled(false);
+		if(!prefs.contains("movie")){
+		    item.setEnabled(false);
+		}
+		else{
+			item.setEnabled(true);
+		}
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -134,6 +142,12 @@ public class InfoScreen extends Activity {
     			return true;
     		case R.id.action_video:
     			mIntent = new Intent(getApplicationContext(), VideoViewActivity.class);
+    			SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
+    			String movie = prefs.getString("movie", "2012");
+    			Bundle mBundle = new Bundle();
+				mBundle.putString("title", movie);
+				Log.v("listener", title);
+    			mIntent.putExtras(mBundle);
 				startActivity(mIntent); 
     			return true;
     		default:

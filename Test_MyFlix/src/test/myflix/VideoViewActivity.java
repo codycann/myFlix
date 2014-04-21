@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,10 +53,13 @@ public class VideoViewActivity extends Activity {
             try
             {
             	String title = extras.getString("title");
-            	title.replace(":", "()");
-            	VideoURL = "http://cannonmovies.us/myflix/"+ title + ".mp4";
+        		SharedPreferences prefs = this.getSharedPreferences("test.myflix", Context.MODE_PRIVATE);
+        		prefs.edit().putString("movie", title).commit();
+            	String videoTitle = title.replace(":", "()");
+            	VideoURL = "http://cannonmovies.us/myflix/"+ videoTitle + ".mp4";
             	//VideoURL = "http://cannonmovies.us/myflix/2012.mp4";
             	VideoURL = VideoURL.replace(" ","%20");
+            	Log.v("trying to play", VideoURL);
             	MovieName = title;
             }
             catch(Exception e)
